@@ -95,145 +95,56 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /*
- * main.cpp
+ * UCMImpl.h
  *
- *  Created on: Aug 20, 2015
+ *  Created on: Aug 26, 2015
  *      Author: dupes
  */
 
-#include "UCMImpl.h"
+#ifndef SAMPLE2_SAMPLE2_UCMIMPL_H_
+#define SAMPLE2_SAMPLE2_UCMIMPL_H_
 
-#include "easylogging++.h"
+#include <cea2045/cea2045/processmessage/IUCM.h>
 
-#include <cea2045/cea2045/device/DeviceFactory.h>
+#include <condition_variable>
+#include <mutex>
 
-#include <cea2045/cea2045/communicationport/CEA2045SerialPort.h>
+using namespace std;
 
-using namespace cea2045;
-
-INITIALIZE_EASYLOGGINGPP
-
-#include <cea2045/cea2045/util/MSTimer.h>
-
-int main()
+class UCMImpl : public cea2045::IUCM
 {
-	MSTimer timer;
-	bool shutdown = false;
+private:
+	cea2045::MaxPayloadLengthCode m_sgdMaxPayload;
 
-	CEA2045SerialPort sp("/dev/ttyUSB0");
-	UCMImpl ucm;
-	ResponseCodes responseCodes;
+public:
+	UCMImpl();
+	virtual ~UCMImpl();
 
-	if (!sp.open())
-	{
-		LOG(ERROR) << "failed to open serial port: " << strerror(errno);
-		return 0;
-	}
+	virtual bool isMessageTypeSupported(cea2045::MessageTypeCode messageType);
+	virtual cea2045::MaxPayloadLengthCode getMaxPayload();
 
-	ICEA2045DeviceUCM *device = DeviceFactory::createUCM(&sp, &ucm);
+	virtual void processMaxPayloadResponse(cea2045::MaxPayloadLengthCode maxPayload);
+	virtual void processDeviceInfoResponse(cea2045::cea2045DeviceInfoResponse *message);
+	virtual void processCommodityResponse(cea2045::cea2045CommodityResponse *message);
+	virtual void processSetEnergyPriceResponse(cea2045::cea2045IntermediateResponse *message) {};
+	virtual void processSetTemperatureOffsetResponse(cea2045::cea2045IntermediateResponse *message) {};
+	virtual void processGetTemperatureOffsetResponse(cea2045::cea2045GetTemperateOffsetResponse *message) {};
+	virtual void processSetSetpointsResponse(cea2045::cea2045IntermediateResponse *message) {};
+	virtual void processGetSetpointsResponse(cea2045::cea2045GetSetpointsResponse1 *message) {};
+	virtual void processGetSetpointsResponse(cea2045::cea2045GetSetpointsResponse2 *message) {};
+	virtual void processStartCyclingResponse(cea2045::cea2045IntermediateResponse *message) {};
+	virtual void processTerminateCyclingResponse(cea2045::cea2045IntermediateResponse *message) {};
+	virtual void processGetPresentTemperatureResponse(cea2045::cea2045GetPresentTemperatureResponse *message) {};
+	virtual void processGetUTCTimeResponse(cea2045::cea2045GetUTCTimeResponse *message) {};;
+	virtual void processAckReceived(cea2045::MessageCode messageCode);
+	virtual void processNakReceived(cea2045::LinkLayerNakCode nak, cea2045::MessageCode messageCode);
 
-	device->start();
+	virtual void processAppAckReceived(cea2045::cea2045Basic *message);
+	virtual void processAppNakReceived(cea2045::cea2045Basic *message);
+	virtual void processOperationalStateReceived(cea2045::cea2045Basic *message);
+	virtual void processAppCustomerOverride(cea2045::cea2045Basic *message);
 
-	timer.reset();
+	virtual void processIncompleteMessage(const unsigned char *buffer, unsigned int numBytes);
+};
 
-	responseCodes = device->querySuportDataLinkMessages().get();
-
-	LOG(INFO) << "  query data link elapsed time: " << timer.getElapsedMS();
-
-	timer.reset();
-
-	responseCodes = device->queryMaxPayload().get();
-
-	LOG(INFO) << "  query max payload elapsed time: " << timer.getElapsedMS();
-
-	timer.reset();
-
-	responseCodes = device->querySuportIntermediateMessages().get();
-
-	LOG(INFO) << "  query intermediate elapsed time: " << timer.getElapsedMS();
-
-	timer.reset();
-
-	responseCodes = device->intermediateGetDeviceInformation().get();
-
-	LOG(INFO) << "  device info elapsed time: " << timer.getElapsedMS();
-
-	LOG(INFO) << "startup complete";
-
-	while (!shutdown)
-	{
-		char c = getchar();
-
-		switch (c)
-		{
-			case 'c':
-				device->basicCriticalPeakEvent(5).get();
-				break;
-
-			case 'e':
-				device->basicEndShed(0).get();
-				break;
-
-			case 'g':
-				device->basicGridEmergency(5).get();
-				break;
-
-			case 'l':
-				device->basicLoadUp(5).get();
-				break;
-
-			case '\n':
-				break;
-
-			case 'n':
-				device->basicNextRelativePrice(153).get(); // approx 4x
-				break;
-
-			case 'o':
-				device->basicOutsideCommConnectionStatus(OutsideCommuncatonStatusCode::Found);
-				break;
-
-			case 'p':
-				device->basicPowerLevel(63).get();		// approx 50%
-				break;
-
-			case 'q':
-				shutdown = true;
-				break;
-
-			case 'r':
-				device->basicPresentRelativePrice(101).get();	// approx twice
-				break;
-
-			case 's':
-				device->basicShed(5).get();
-				break;
-
-			case 'C':
-				device->intermediateGetCommodity().get();
-				break;
-
-			case 'O':
-				device->intermediateGetTemperatureOffset().get();
-				break;
-
-			case 'S':
-				device->intermediateGetSetPoint().get();
-				break;
-
-			case 'T':
-				device->intermediateGetPresentTemperature().get();
-				break;
-
-			default:
-				LOG(WARNING) << "invalid command";
-				break;
-		}
-	}
-
-	device->shutDown();
-
-	delete (device);
-
-	return 0;
-}
+#endif /* SAMPLE2_SAMPLE2_UCMIMPL_H_ */

@@ -5,26 +5,16 @@
 # You should always specify a range with the newest
 # and oldest tested versions of CMake. This will ensure
 # you pick up the best policies.
-cmake_minimum_required(VERSION 3.11...3.19)
-
-# MACRO to allow 3.14+ syntax
-if(${CMAKE_VERSION} VERSION_LESS 3.14)
-    macro(FetchContent_MakeAvailable NAME)
-        FetchContent_GetProperties(${NAME})
-        if(NOT ${NAME}_POPULATED)
-            FetchContent_Populate(${NAME})
-            add_subdirectory(${${NAME}_SOURCE_DIR} ${${NAME}_BINARY_DIR})
-        endif()
-    endmacro()
-endif()
+cmake_minimum_required(VERSION 3.14...3.19)
 
 # This is your project statement. You should always list languages;
 # Listing the version is nice here since it sets lots of useful variables
 project(
-  ModernCMakeExample
+  EGoT-DCS-CTA2045
   VERSION 1.0
   LANGUAGES CXX)
 include(FetchContent)
+include(ExternalProject)
 
 # If you set any CMAKE_ variables, that can go here.
 # (But usually don't do this, except maybe for C++ standard)
@@ -33,15 +23,27 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 enable_testing() # Must be in main file
 
 # Find packages go here.
-find_package(Boost REQUIRED regex filesystem)
+find_package(Boost REQUIRED)
 FetchContent_Declare(
   googletest
   GIT_REPOSITORY https://github.com/google/googletest.git
   GIT_TAG        master
 )
 
+FetchContent_Declare(
+  IEEE2030-5
+  GIT_REPOSITORY https://github.com/psu-powerlab/IEEE_2030-5_Resources.git
+  GIT_TAG        main
+)
+
+FetchContent_Declare(
+  cta2045
+  GIT_REPOSITORY https://github.com/epri-dev/CTA-2045-UCM-CPP-Library.git
+  GIT_TAG        master
+)
+
 # CMake 3.14+
-FetchContent_MakeAvailable(googletest)
+FetchContent_MakeAvailable(googletest IEEE2030-5 cta2045)
 
 # You should usually split this into folders, but this is a simple example
 

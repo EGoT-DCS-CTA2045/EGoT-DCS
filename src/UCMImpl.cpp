@@ -95,145 +95,173 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /*
- * main.cpp
+ * UCMImpl.cpp
  *
- *  Created on: Aug 20, 2015
+ *  Created on: Aug 26, 2015
  *      Author: dupes
  */
 
 #include "UCMImpl.h"
-
 #include "easylogging++.h"
-
-#include <cea2045/cea2045/device/DeviceFactory.h>
-
-#include <cea2045/cea2045/communicationport/CEA2045SerialPort.h>
-
-using namespace cea2045;
-
-INITIALIZE_EASYLOGGINGPP
 
 #include <cea2045/cea2045/util/MSTimer.h>
 
-int main()
+#include <chrono>
+
+using namespace std;
+
+UCMImpl::UCMImpl()
 {
-	MSTimer timer;
-	bool shutdown = false;
+	m_sgdMaxPayload = cea2045::MaxPayloadLengthCode::LENGTH2;
+}
 
-	CEA2045SerialPort sp("/dev/ttyUSB0");
-	UCMImpl ucm;
-	ResponseCodes responseCodes;
+//======================================================================================
 
-	if (!sp.open())
+UCMImpl::~UCMImpl()
+{
+}
+
+//======================================================================================
+
+bool UCMImpl::isMessageTypeSupported(cea2045::MessageTypeCode messageType)
+{
+	LOG(INFO) << "message type supported received: " << (int)messageType;
+
+	if (messageType == cea2045::MessageTypeCode::NONE)
+		return false;
+
+	return true;
+}
+
+//======================================================================================
+
+cea2045::MaxPayloadLengthCode UCMImpl::getMaxPayload()
+{
+	LOG(INFO) << "max payload request received";
+
+	return cea2045::MaxPayloadLengthCode::LENGTH4096;
+}
+
+//======================================================================================
+
+void UCMImpl::processMaxPayloadResponse(cea2045::MaxPayloadLengthCode maxPayload)
+{
+	LOG(INFO) << "max payload response received";
+
+	m_sgdMaxPayload = maxPayload;
+}
+
+//======================================================================================
+
+void UCMImpl::processDeviceInfoResponse(cea2045::cea2045DeviceInfoResponse* message)
+{
+	LOG(INFO) << "device info response received";
+
+	LOG(INFO) << "    device type: " << message->getDeviceType();
+	LOG(INFO) << "      vendor ID: " << message->getVendorID();
+
+	LOG(INFO) << "  firmware date: "
+			<< 2000 + (int)message->firmwareYear20xx << "-" << (int)message->firmwareMonth << "-" << (int)message->firmwareDay;
+}
+
+//======================================================================================
+
+void UCMImpl::processCommodityResponse(cea2045::cea2045CommodityResponse* message)
+{
+	LOG(INFO) << "commodity response received.  count: " << message->getCommodityDataCount();
+
+	int count = message->getCommodityDataCount();
+
+	for (int x = 0; x < count; x++)
 	{
-		LOG(ERROR) << "failed to open serial port: " << strerror(errno);
-		return 0;
+		cea2045::cea2045CommodityData *data = message->getCommodityData(x);
+
+		LOG(INFO) << "commodity data: " << x;
+
+		LOG(INFO) << "        code: " << (int)data->commodityCode;
+		LOG(INFO) << "  cumulative: " << data->getCumulativeAmount();
+		LOG(INFO) << "   inst rate: " << data->getInstantaneousRate();
 	}
+}
 
-	ICEA2045DeviceUCM *device = DeviceFactory::createUCM(&sp, &ucm);
+//======================================================================================
 
-	device->start();
+void UCMImpl::processAckReceived(cea2045::MessageCode messageCode)
+{
+	LOG(INFO) << "ack received: " << (int)messageCode;
 
-	timer.reset();
-
-	responseCodes = device->querySuportDataLinkMessages().get();
-
-	LOG(INFO) << "  query data link elapsed time: " << timer.getElapsedMS();
-
-	timer.reset();
-
-	responseCodes = device->queryMaxPayload().get();
-
-	LOG(INFO) << "  query max payload elapsed time: " << timer.getElapsedMS();
-
-	timer.reset();
-
-	responseCodes = device->querySuportIntermediateMessages().get();
-
-	LOG(INFO) << "  query intermediate elapsed time: " << timer.getElapsedMS();
-
-	timer.reset();
-
-	responseCodes = device->intermediateGetDeviceInformation().get();
-
-	LOG(INFO) << "  device info elapsed time: " << timer.getElapsedMS();
-
-	LOG(INFO) << "startup complete";
-
-	while (!shutdown)
+	switch (messageCode)
 	{
-		char c = getchar();
 
-		switch (c)
+	case cea2045::MessageCode::SUPPORT_DATALINK_MESSAGES:
+		LOG(INFO) << "supports data link messages";
+		break;
+
+	case cea2045::MessageCode::SUPPORT_INTERMEDIATE_MESSAGES:
+		LOG(INFO) << "supports intermediate messages";
+		break;
+
+	default:
+		break;
+	}
+}
+
+//======================================================================================
+
+void UCMImpl::processNakReceived(cea2045::LinkLayerNakCode nak, cea2045::MessageCode messageCode)
+{
+	LOG(WARNING) << "nak received";
+
+	if (nak == cea2045::LinkLayerNakCode::UNSUPPORTED_MESSAGE_TYPE)
+	{
+		switch (messageCode)
 		{
-			case 'c':
-				device->basicCriticalPeakEvent(5).get();
-				break;
 
-			case 'e':
-				device->basicEndShed(0).get();
-				break;
+		case cea2045::MessageCode::SUPPORT_DATALINK_MESSAGES:
+			LOG(WARNING) << "does not support data link";
+			break;
 
-			case 'g':
-				device->basicGridEmergency(5).get();
-				break;
+		case cea2045::MessageCode::SUPPORT_INTERMEDIATE_MESSAGES:
+			LOG(WARNING) << "does not support intermediate";
+			break;
 
-			case 'l':
-				device->basicLoadUp(5).get();
-				break;
-
-			case '\n':
-				break;
-
-			case 'n':
-				device->basicNextRelativePrice(153).get(); // approx 4x
-				break;
-
-			case 'o':
-				device->basicOutsideCommConnectionStatus(OutsideCommuncatonStatusCode::Found);
-				break;
-
-			case 'p':
-				device->basicPowerLevel(63).get();		// approx 50%
-				break;
-
-			case 'q':
-				shutdown = true;
-				break;
-
-			case 'r':
-				device->basicPresentRelativePrice(101).get();	// approx twice
-				break;
-
-			case 's':
-				device->basicShed(5).get();
-				break;
-
-			case 'C':
-				device->intermediateGetCommodity().get();
-				break;
-
-			case 'O':
-				device->intermediateGetTemperatureOffset().get();
-				break;
-
-			case 'S':
-				device->intermediateGetSetPoint().get();
-				break;
-
-			case 'T':
-				device->intermediateGetPresentTemperature().get();
-				break;
-
-			default:
-				LOG(WARNING) << "invalid command";
-				break;
+		default:
+			break;
 		}
 	}
+}
 
-	device->shutDown();
+//======================================================================================
 
-	delete (device);
+void UCMImpl::processOperationalStateReceived(cea2045::cea2045Basic *message)
+{
+	LOG(INFO) << "operational state received " << (int)message->opCode2;
+}
 
-	return 0;
+//======================================================================================
+
+void UCMImpl::processAppAckReceived(cea2045::cea2045Basic* message)
+{
+	LOG(INFO) << "app ack received";
+}
+
+//======================================================================================
+
+void UCMImpl::processAppNakReceived(cea2045::cea2045Basic* message)
+{
+	LOG(INFO) << "app nak received";
+}
+
+//======================================================================================
+
+void UCMImpl::processAppCustomerOverride(cea2045::cea2045Basic* message)
+{
+	LOG(INFO) << "app cust override received: " << (int)message->opCode2;
+}
+
+//======================================================================================
+
+void UCMImpl::processIncompleteMessage(const unsigned char *buffer, unsigned int numBytes)
+{
+	LOG(WARNING) << "incomplete message received: " << numBytes;
 }
