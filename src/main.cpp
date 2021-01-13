@@ -101,27 +101,27 @@
  *      Author: dupes
  */
 
-#include "UCMImpl.h"
+#include "DCMImpl.h"
 
 #include "easylogging++.h"
 
-#include <cea2045/cea2045/device/DeviceFactory.h>
+#include <cea2045/device/DeviceFactory.h>
 
-#include <cea2045/cea2045/communicationport/CEA2045SerialPort.h>
+#include <cea2045/communicationport/CEA2045SerialPort.h>
 
 using namespace cea2045;
 
 INITIALIZE_EASYLOGGINGPP
 
-#include <cea2045/cea2045/util/MSTimer.h>
+#include <cea2045/util/MSTimer.h>
 
 int main()
 {
 	MSTimer timer;
 	bool shutdown = false;
 
-	CEA2045SerialPort sp("/dev/ttyUSB0");
-	UCMImpl ucm;
+	CEA2045SerialPort sp("/dev/ttyS5");
+	DCMImpl ucm;
 	ResponseCodes responseCodes;
 
 	if (!sp.open())

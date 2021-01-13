@@ -35,3 +35,6 @@
 /cmake/*
 /build/*
 /docs/*
+
+# Log files
+*.log # logs not necessary
