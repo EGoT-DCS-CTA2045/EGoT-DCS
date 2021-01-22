@@ -111,7 +111,7 @@
 
 using namespace cea2045;
 
-INITIALIZE_EASYLOGGINGPP
+// INITIALIZE_EASYLOGGINGPP
 
 #include <cea2045/util/MSTimer.h>
 

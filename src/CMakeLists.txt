@@ -1,4 +1,4 @@
-add_executable(app main.cpp DCMImpl.cpp UCMImpl.cpp)
+add_executable(app DCM.cpp DCMImpl.cpp CTA2045Translator.cpp UCMImpl.cpp)
 target_link_libraries(app LINK_PUBLIC cea2045 Boost::boost IEEE2030-5 pthread)
 target_include_directories(app PUBLIC 
 	${cta2045_SOURCE_DIR}

@@ -37,4 +37,4 @@
 /docs/*
 
 # Log files
-*.log # logs not necessary
+**/logs/*
