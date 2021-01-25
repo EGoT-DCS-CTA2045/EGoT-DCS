@@ -71,45 +71,44 @@ bool CTA2045Translator::connect(){
 	dev = DeviceFactory::createUCM(SerialPort, &dcm);
 	dev->start();
 
-
+	LOG(INFO) << "==> Query data link ";
 	timer.reset();
 	response = dev->querySuportDataLinkMessages().get();
-	LOG(INFO) << "  Query data link elapsed time"<<endl;
 #if USE_DEBUG
-    LOG(INFO) <<" ---> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
+    LOG(INFO) <<"--> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){
-        LOG(ERROR) << " Connection FAILED. Query took: "<<timer.getElapsedMS()<<" ms"<<endl;
+        LOG(ERROR) << " Connection FAILED. Query took: "<<timer.getElapsedMS()<<" ms";
         return false;
     }
 
+	LOG(INFO) << "==> Query max payload";
 	timer.reset();
 	response = dev->queryMaxPayload().get();
-	LOG(INFO) << "  Query max payload elapsed time"<<endl;
 #if USE_DEBUG
-    LOG(INFO) <<" ---> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
+    LOG(INFO) <<"--> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){
-        LOG(ERROR) << " Connection FAILED. Query took: "<<timer.getElapsedMS()<<" ms"<<endl;
+        LOG(ERROR) << " Connection FAILED. Query took: "<<timer.getElapsedMS()<<" ms";
         return false;
     }
 
+	LOG(INFO) << "==> Query intermediate";
 	timer.reset();
 	response = dev->querySuportIntermediateMessages().get();
-	LOG(INFO) << "  Query intermediate"<<endl;
 #if USE_DEBUG
-    LOG(INFO) <<" ---> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
+    LOG(INFO) <<"--> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<timer.getElapsedMS()<<" ms"<<endl;
         return false;
     }
 
+	LOG(INFO) << "==> Query Device Information ";
 	timer.reset();
 	response = dev->intermediateGetDeviceInformation().get();
-	LOG(INFO) << "  Query intermediate (Device Information)"<<endl;
 #if USE_DEBUG
-    LOG(INFO) <<" ---> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
+    LOG(INFO) <<"--> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<timer.getElapsedMS()<<" ms"<<endl;
