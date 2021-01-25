@@ -1,7 +1,6 @@
 #include "DCMImpl.h"
 #include <cea2045/communicationport/CEA2045SerialPort.h>
 #include <cea2045/device/DeviceFactory.h>
-// #include <cea2045/message/CEA2045Message.h>
 
 class CTA2045Translator{
     private:
@@ -11,6 +10,9 @@ class CTA2045Translator{
         cea2045::MSTimer timer;
         DCMImpl dcm;
         cea2045::ICEA2045DeviceUCM *dev;
+#ifdef USE_DEBUG
+        char* ResponseCodes[(int)cea2045::ResponseCode::NAK]; // Because NAK code is the greatest (gives the length of the enum)
+#endif
     public:
         CTA2045Translator(); // constructor
         ~CTA2045Translator();// destructor
@@ -18,5 +20,8 @@ class CTA2045Translator{
         void ResponseCodeMap(cea2045::ResponseCode code,char*);
         bool connect();
         bool disconnect();
+#if USE_DEBUG
+        void InitResponseCodes();
+#endif
 
 };
