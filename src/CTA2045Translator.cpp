@@ -1,20 +1,20 @@
 #include "CTA2045Translator.h"
 #include "easylogging++.h"
 
-using namespace cea2045;
+// using namespace cea2045;
 
 INITIALIZE_EASYLOGGINGPP
 
 #include <cea2045/util/MSTimer.h>
 
-CTA2045Translator::CTA2045Translator(){
-    strncpy(port,"/dev/ttyS5",sizeof(port)-1); // go with default
+CTA2045Translator::CTA2045Translator():dev(0){
+    strncpy(port,"/dev/ttyS6",sizeof(port)-1); // go with default
     SerialPort = new CEA2045SerialPort(port);
 #if USE_DEBUG
     InitResponseCodes();
 #endif
 }
-CTA2045Translator::CTA2045Translator(char* p):SerialPort(0){
+CTA2045Translator::CTA2045Translator(char* p):SerialPort(0),dev(0){
     // copy port
     strncpy(port,"/dev/",sizeof(port)-1);
     strncat(port,p,sizeof(port)-1);
@@ -23,6 +23,9 @@ CTA2045Translator::CTA2045Translator(char* p):SerialPort(0){
 #if USE_DEBUG
     InitResponseCodes();    
 #endif
+}
+CTA2045Translator::CTA2045Translator(ICEA2045DeviceUCM* device,CEA2045SerialPort* port):SerialPort(port){
+    dev = device;
 }
 CTA2045Translator::~CTA2045Translator(){
     // no dynamic mem so far
@@ -52,12 +55,12 @@ bool CTA2045Translator::disconnect(){
 #ifdef USE_DEBUG
 void CTA2045Translator::InitResponseCodes()
 {
-    ResponseCodes[(int)ResponseCode::OK] = (char*)"OK";
-    ResponseCodes[(int)ResponseCode::TIMEOUT] = (char*)"TIMEOUT";
-    ResponseCodes[(int)ResponseCode::BAD_CRC] = (char*)" BAD_CRC";
-    ResponseCodes[(int)ResponseCode::INVALID_RESPONSE] = (char*)"INVALID_RESPONSE";
-    ResponseCodes[(int)ResponseCode::NO_ACK_RECEIVED] = (char*)"NO_ACK_RECEIVED";
-    ResponseCodes[(int)ResponseCode::NAK] = (char*)"NAK";
+    ResCodes[(int)ResponseCode::OK] = (char*)"OK";
+    ResCodes[(int)ResponseCode::TIMEOUT] = (char*)"TIMEOUT";
+    ResCodes[(int)ResponseCode::BAD_CRC] = (char*)" BAD_CRC";
+    ResCodes[(int)ResponseCode::INVALID_RESPONSE] = (char*)"INVALID_RESPONSE";
+    ResCodes[(int)ResponseCode::NO_ACK_RECEIVED] = (char*)"NO_ACK_RECEIVED";
+    ResCodes[(int)ResponseCode::NAK] = (char*)"NAK";
     return;
 }
 #endif
@@ -67,15 +70,15 @@ bool CTA2045Translator::connect(){
 		LOG(ERROR) << "failed to open serial port: " << strerror(errno);
 		return false;
 	}
-
-	dev = DeviceFactory::createUCM(SerialPort, &dcm);
+    if(!dev)
+	    dev = DeviceFactory::createUCM(SerialPort, &dcm);
 	dev->start();
 
 	LOG(INFO) << "==> Query data link ";
 	timer.reset();
 	response = dev->querySuportDataLinkMessages().get();
 #if USE_DEBUG
-    LOG(INFO) <<"--> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
+    LOG(INFO) <<"--> Response: " <<ResCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<timer.getElapsedMS()<<" ms";
@@ -86,7 +89,7 @@ bool CTA2045Translator::connect(){
 	timer.reset();
 	response = dev->queryMaxPayload().get();
 #if USE_DEBUG
-    LOG(INFO) <<"--> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
+    LOG(INFO) <<"--> Response: " <<ResCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<timer.getElapsedMS()<<" ms";
@@ -97,7 +100,7 @@ bool CTA2045Translator::connect(){
 	timer.reset();
 	response = dev->querySuportIntermediateMessages().get();
 #if USE_DEBUG
-    LOG(INFO) <<"--> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
+    LOG(INFO) <<"--> Response: " <<ResCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<timer.getElapsedMS()<<" ms"<<endl;
@@ -108,7 +111,7 @@ bool CTA2045Translator::connect(){
 	timer.reset();
 	response = dev->intermediateGetDeviceInformation().get();
 #if USE_DEBUG
-    LOG(INFO) <<"--> Response: " <<ResponseCodes[(int)response.responesCode]<<endl;
+    LOG(INFO) <<"--> Response: " <<ResCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<timer.getElapsedMS()<<" ms"<<endl;
