@@ -56,5 +56,7 @@ FetchContent_MakeAvailable(googletest IEEE2030-5 cta2045)
 # Link each target with other targets or add options, etc.
 
 # The executable code is here
+set(USE_DEBUG OFF)
+#set(CMAKE_BUILD_TYPE Debug)
 add_subdirectory(src)
 add_subdirectory(tests)

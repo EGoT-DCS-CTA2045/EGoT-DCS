@@ -10,7 +10,7 @@ INITIALIZE_EASYLOGGINGPP
 CTA2045Translator::CTA2045Translator():dev(0),emulated(false){
     strncpy(port,"/dev/ttyS6",sizeof(port)-1); // go with default
     SerialPort = new CEA2045SerialPort(port);
-#if USE_DEBUG
+#ifdef USE_DEBUG
     InitResponseCodes();
 #endif
 }
@@ -20,12 +20,15 @@ CTA2045Translator::CTA2045Translator(char* p):SerialPort(0),dev(0),emulated(fals
     strncat(port,p,sizeof(port)-1);
     port[sizeof(port)-1] = '\0';
     SerialPort = new CEA2045SerialPort(port);
-#if USE_DEBUG
+#ifdef USE_DEBUG
     InitResponseCodes();    
 #endif
 }
 CTA2045Translator::CTA2045Translator(ICEA2045DeviceUCM* device,CEA2045SerialPort* port):SerialPort(port),emulated(true){
     dev = device;
+#ifdef USE_DEBUG
+    InitResponseCodes();
+#endif
 }
 CTA2045Translator::~CTA2045Translator(){
     // no dynamic mem so far
@@ -68,6 +71,7 @@ void CTA2045Translator::InitResponseCodes()
 }
 #endif
 bool CTA2045Translator::connect(){
+
     char res[100];
 	if (!SerialPort || !SerialPort->open()){
 		LOG(ERROR) << "failed to open serial port: " << strerror(errno);
@@ -83,7 +87,7 @@ bool CTA2045Translator::connect(){
 	LOG(INFO) << "==> Query data link ";
 	timer.reset();
 	response = dev->querySuportDataLinkMessages().get();
-#if USE_DEBUG
+#ifdef USE_DEBUG
     LOG(INFO) <<"--> Response: " <<ResCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){
@@ -94,7 +98,7 @@ bool CTA2045Translator::connect(){
 	LOG(INFO) << "==> Query max payload";
 	timer.reset();
 	response = dev->queryMaxPayload().get();
-#if USE_DEBUG
+#ifdef USE_DEBUG
     LOG(INFO) <<"--> Response: " <<ResCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){
@@ -105,7 +109,7 @@ bool CTA2045Translator::connect(){
 	LOG(INFO) << "==> Query intermediate";
 	timer.reset();
 	response = dev->querySuportIntermediateMessages().get();
-#if USE_DEBUG
+#ifdef USE_DEBUG
     LOG(INFO) <<"--> Response: " <<ResCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){
@@ -116,7 +120,7 @@ bool CTA2045Translator::connect(){
 	LOG(INFO) << "==> Query Device Information ";
 	timer.reset();
 	response = dev->intermediateGetDeviceInformation().get();
-#if USE_DEBUG
+#ifdef USE_DEBUG
     LOG(INFO) <<"--> Response: " <<ResCodes[(int)response.responesCode]<<endl;
 #endif
     if (response.responesCode > ResponseCode::OK){

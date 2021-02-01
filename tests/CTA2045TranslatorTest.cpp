@@ -9,12 +9,22 @@ using ::testing::AtLeast;
 using ::testing::Return;
 using ::testing::Invoke;
 
+// test device failure due to NULL serial port
+TEST(Translator, SerialPortNULL) {
+    
+    CEA2045DeviceMock dev;
+    
+    CTA2045Translator translator(&dev,0);
+    
+    EXPECT_FALSE(translator.connect());
+}
+
 // test device failure due to serial port failure
 TEST(Translator, SerialPortFail) {
     
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
-    
+
     EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(false));
 
     CTA2045Translator translator(&dev,&sp);
