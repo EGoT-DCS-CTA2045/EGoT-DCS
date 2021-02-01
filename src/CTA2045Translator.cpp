@@ -72,7 +72,10 @@ bool CTA2045Translator::connect(){
 	}
     if(!dev)
 	    dev = DeviceFactory::createUCM(SerialPort, &dcm);
-	dev->start();    
+	if(!dev->start()){
+        LOG(ERROR) << "failed to start device: " << strerror(errno);
+		return false;
+    }  
 
 	LOG(INFO) << "==> Query data link ";
 	timer.reset();

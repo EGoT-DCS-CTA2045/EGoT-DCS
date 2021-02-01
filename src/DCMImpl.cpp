@@ -23,3 +23,11 @@ bool DCMImpl::isMessageTypeSupported(cea2045::MessageTypeCode messageType)
 		return false;
 	return true;
 }
+void DCMImpl::processDeviceInfoResponse(cea2045::cea2045DeviceInfoResponse* message){
+
+	LOG(INFO) << "device type: " << message->getDeviceType();
+	LOG(INFO) << "vendor ID: " << message->getVendorID();
+
+	LOG(INFO) << "firmware date: "
+			<< 2000 + (int)message->firmwareYear20xx << "-" << (int)message->firmwareMonth << "-" << (int)message->firmwareDay;
+}
