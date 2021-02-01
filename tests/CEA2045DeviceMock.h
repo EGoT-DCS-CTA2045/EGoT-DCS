@@ -6,6 +6,15 @@ using namespace cea2045;
 class CEA2045DeviceMock : public ICEA2045DeviceUCM {
     public:
         CEA2045DeviceMock():ICEA2045DeviceUCM(){};
+        std::future<ResponseCodes> Response(int res,int nak){
+            auto ret = std::async(std::launch::async,[res,nak]()->ResponseCodes{
+                ResponseCodes r; 
+                r.responesCode = (ResponseCode)res;
+                r.nak = (LinkLayerNakCode)nak;
+                return r;
+            });
+            return ret;
+        }
         MOCK_METHOD0(start,bool());
         MOCK_METHOD0(shutDown,void());
         MOCK_METHOD0(intermediateGetDeviceInformation,std::future<ResponseCodes>());

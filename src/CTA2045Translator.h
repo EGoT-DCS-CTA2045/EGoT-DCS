@@ -11,6 +11,7 @@ class CTA2045Translator{
         MSTimer timer;
         DCMImpl dcm;
         ICEA2045DeviceUCM *dev;
+        bool emulated;
 #ifdef USE_DEBUG
         char* ResCodes[(int)cea2045::ResponseCode::NAK]; // Because NAK code is the greatest (gives the length of the enum)
 #endif

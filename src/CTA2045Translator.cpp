@@ -7,14 +7,14 @@ INITIALIZE_EASYLOGGINGPP
 
 #include <cea2045/util/MSTimer.h>
 
-CTA2045Translator::CTA2045Translator():dev(0){
+CTA2045Translator::CTA2045Translator():dev(0),emulated(false){
     strncpy(port,"/dev/ttyS6",sizeof(port)-1); // go with default
     SerialPort = new CEA2045SerialPort(port);
 #if USE_DEBUG
     InitResponseCodes();
 #endif
 }
-CTA2045Translator::CTA2045Translator(char* p):SerialPort(0),dev(0){
+CTA2045Translator::CTA2045Translator(char* p):SerialPort(0),dev(0),emulated(false){
     // copy port
     strncpy(port,"/dev/",sizeof(port)-1);
     strncat(port,p,sizeof(port)-1);
@@ -24,27 +24,27 @@ CTA2045Translator::CTA2045Translator(char* p):SerialPort(0),dev(0){
     InitResponseCodes();    
 #endif
 }
-CTA2045Translator::CTA2045Translator(ICEA2045DeviceUCM* device,CEA2045SerialPort* port):SerialPort(port){
+CTA2045Translator::CTA2045Translator(ICEA2045DeviceUCM* device,CEA2045SerialPort* port):SerialPort(port),emulated(true){
     dev = device;
 }
 CTA2045Translator::~CTA2045Translator(){
     // no dynamic mem so far
-    if (dev)
+    if (dev && !emulated)
     {
         dev->shutDown();
         delete dev; // free device
         dev = 0;
     }
-    if (SerialPort){
+    if (SerialPort && !emulated){
         delete SerialPort;
         SerialPort = 0;
     }
 }
 bool CTA2045Translator::disconnect(){
-    if (! dev)
+    if (! dev || emulated)
     {
         LOG(INFO) <<" device already diconnected"<<endl;
-        return false;
+        return true;
     }
     // disconnect & free
     dev->shutDown();
@@ -72,7 +72,7 @@ bool CTA2045Translator::connect(){
 	}
     if(!dev)
 	    dev = DeviceFactory::createUCM(SerialPort, &dcm);
-	dev->start();
+	dev->start();    
 
 	LOG(INFO) << "==> Query data link ";
 	timer.reset();
