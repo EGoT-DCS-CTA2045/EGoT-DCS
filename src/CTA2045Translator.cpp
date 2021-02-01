@@ -41,14 +41,17 @@ CTA2045Translator::~CTA2045Translator(){
     }
 }
 bool CTA2045Translator::disconnect(){
-    if (! dev || emulated)
+    if (!dev)
     {
+        LOG(INFO) <<" device diconnected: FAILED";
         LOG(INFO) <<" device already diconnected"<<endl;
-        return true;
+        return false;
     }
     // disconnect & free
     dev->shutDown();
-    delete dev;
+    LOG(INFO) <<" device diconnected: SUCCESS"<<endl;
+    if (!emulated) // clean up
+        delete dev;
     dev = 0;
     return true;
 }
