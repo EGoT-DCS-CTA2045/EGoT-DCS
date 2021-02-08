@@ -6,14 +6,14 @@ using namespace cea2045;
 class CTA2045Translator{
     private:
         char port[50];
-        CEA2045SerialPort* SerialPort;
-        ResponseCodes response;
-        MSTimer timer;
-        DCMImpl dcm;
-        ICEA2045DeviceUCM *dev;
-        bool emulated;
+        CEA2045SerialPort* serial_port_;
+        ResponseCodes DER_response_;
+        MSTimer DER_response_timer_;
+        DCMImpl DER_response_handler_;
+        ICEA2045DeviceUCM* device_;
+        bool emulated_;
 #ifdef USE_DEBUG
-        char* ResCodes[(int)cea2045::ResponseCode::NAK]; // Because NAK code is the greatest (gives the length of the enum)
+        char* response_code_map_[(int)cea2045::ResponseCode::NAK]; // Because NAK code is the greatest (gives the length of the enum)
 #endif
     public:
         CTA2045Translator(); // constructor
