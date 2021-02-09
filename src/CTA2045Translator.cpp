@@ -71,7 +71,6 @@ void CTA2045Translator::InitResponseCodes()
 }
 #endif
 bool CTA2045Translator::connect(){
-
     char res[100];
 	if (!serial_port_ || !serial_port_->open()){
 		LOG(ERROR) << "failed to open serial port: " << strerror(errno);
@@ -88,7 +87,7 @@ bool CTA2045Translator::connect(){
 	DER_response_timer_.reset();
 	DER_response_ = device_->querySuportDataLinkMessages().get();
 #ifdef USE_DEBUG
-    LOG(INFO) <<"--> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
+    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms";
@@ -99,7 +98,7 @@ bool CTA2045Translator::connect(){
 	DER_response_timer_.reset();
 	DER_response_ = device_->queryMaxPayload().get();
 #ifdef USE_DEBUG
-    LOG(INFO) <<"--> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
+    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms";
@@ -110,7 +109,7 @@ bool CTA2045Translator::connect(){
 	DER_response_timer_.reset();
 	DER_response_ = device_->querySuportIntermediateMessages().get();
 #ifdef USE_DEBUG
-    LOG(INFO) <<"--> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
+    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms"<<endl;
@@ -121,7 +120,7 @@ bool CTA2045Translator::connect(){
 	DER_response_timer_.reset();
 	DER_response_ = device_->intermediateGetDeviceInformation().get();
 #ifdef USE_DEBUG
-    LOG(INFO) <<"--> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
+    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms"<<endl;
