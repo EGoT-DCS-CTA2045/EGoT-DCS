@@ -4,7 +4,7 @@ This will be a starting point for C++ projects which will auto include gtest and
 ## Debian Buster (OS)
 The requirements are:
 
-* CMake 3.11 or better;
+* CMake 3.14 or better;
 * A C++11 compatible compiler
 * Boost Libraries
 * Git
@@ -12,9 +12,10 @@ The requirements are:
 ```bash
 sudo apt-get update -y \
   && apt-get install -y build-essential git cmake libboost-all-dev \
-  && mkdir build docs \
-  && cmake -S . -B build \
-  && cmake --build build
+  && mkdir ~/temp
+sudo cd ~/temp && wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz \
+  && tar -xf cmake-3.18.4.tar.gz \
+  && cd cmake-3.18.4 && cmake . && make && make install
 ```
 
 To configure (must be done first):
