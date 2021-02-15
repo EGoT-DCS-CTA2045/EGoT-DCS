@@ -5,13 +5,14 @@
 using namespace cea2045;
 class CTA2045Translator{
     private:
-        char port[50];
+        char port_[50];
         CEA2045SerialPort* serial_port_;
         ResponseCodes DER_response_;
         MSTimer DER_response_timer_;
         DCMImpl DER_response_handler_;
         ICEA2045DeviceUCM* device_;
         bool emulated_;
+        bool connected_;
 #ifdef USE_DEBUG
         char* response_code_map_[(int)cea2045::ResponseCode::NAK]; // Because NAK code is the greatest (gives the length of the enum)
 #endif

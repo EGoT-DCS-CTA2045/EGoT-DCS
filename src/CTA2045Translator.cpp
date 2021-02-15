@@ -8,18 +8,18 @@ INITIALIZE_EASYLOGGINGPP
 #include <cea2045/util/MSTimer.h>
 
 CTA2045Translator::CTA2045Translator():device_(0),emulated_(false){
-    strncpy(port,"/dev/ttyS6",sizeof(port)-1); // go with default
-    serial_port_ = new CEA2045SerialPort(port);
+    strncpy(port_,"/dev/ttyS6",sizeof(port_)-1); // go with default
+    serial_port_ = new CEA2045SerialPort(port_);
 #ifdef USE_DEBUG
     InitResponseCodes();
 #endif
 }
 CTA2045Translator::CTA2045Translator(char* p):serial_port_(0),device_(0),emulated_(false){
     // copy port
-    strncpy(port,"/dev/",sizeof(port)-1);
-    strncat(port,p,sizeof(port)-1);
-    port[sizeof(port)-1] = '\0';
-    serial_port_ = new CEA2045SerialPort(port);
+    strncpy(port_,"/dev/",sizeof(port_)-1);
+    strncat(port_,p,sizeof(port_)-1);
+    port_[sizeof(port_)-1] = '\0';
+    serial_port_ = new CEA2045SerialPort(port_);
 #ifdef USE_DEBUG
     InitResponseCodes();    
 #endif
@@ -74,13 +74,15 @@ bool CTA2045Translator::connect(){
     char res[100];
 	if (!serial_port_ || !serial_port_->open()){
 		LOG(ERROR) << "failed to open serial port: " << strerror(errno);
-		return false;
+		connected_ = false;
+        return connected_;
 	}
     if(!device_)
 	    device_ = DeviceFactory::createUCM(serial_port_, &DER_response_handler_);
 	if(!device_->start()){
         LOG(ERROR) << "failed to start device: " << strerror(errno);
-		return false;
+		connected_ = false;
+        return connected_;
     }  
 
 	LOG(INFO) << "==> Query data link ";
@@ -91,7 +93,8 @@ bool CTA2045Translator::connect(){
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms";
-        return false;
+        connected_ = false;
+        return connected_;
     }
 
 	LOG(INFO) << "==> Query max payload";
@@ -102,7 +105,8 @@ bool CTA2045Translator::connect(){
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms";
-        return false;
+        connected_ = false;
+        return connected_;
     }
 
 	LOG(INFO) << "==> Query intermediate";
@@ -113,7 +117,8 @@ bool CTA2045Translator::connect(){
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms"<<endl;
-        return false;
+        connected_ = false;
+        return connected_;
     }
 
 	LOG(INFO) << "==> Query Device Information ";
@@ -124,8 +129,10 @@ bool CTA2045Translator::connect(){
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms"<<endl;
-        return false;
+        connected_ = false;
+        return connected_;
     }
     LOG(INFO) << " SUCESS";
-    return true;
+    connected_ = true;
+    return connected_;
 }
