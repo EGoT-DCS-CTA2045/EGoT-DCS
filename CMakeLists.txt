@@ -31,7 +31,7 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(
-  IEEE2030-5
+  SEP
   GIT_REPOSITORY https://github.com/psu-powerlab/IEEE_2030-5_Resources.git
   GIT_TAG        main
 )
@@ -43,7 +43,7 @@ FetchContent_Declare(
 )
 
 # CMake 3.14+
-FetchContent_MakeAvailable(googletest IEEE2030-5 cta2045)
+FetchContent_MakeAvailable(googletest SEP cta2045)
 
 # You should usually split this into folders, but this is a simple example
 
@@ -56,5 +56,7 @@ FetchContent_MakeAvailable(googletest IEEE2030-5 cta2045)
 # Link each target with other targets or add options, etc.
 
 # The executable code is here
+set(USE_DEBUG OFF)
+#set(CMAKE_BUILD_TYPE Debug)
 add_subdirectory(src)
 add_subdirectory(tests)
