@@ -24,6 +24,7 @@ class CTA2045Translator{
         void ResponseCodeMap(cea2045::ResponseCode code,char*);
         bool connect();
         bool disconnect();
+        bool shed();
 #ifdef USE_DEBUG
         void InitResponseCodes();
 #endif

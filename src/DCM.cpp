@@ -20,5 +20,7 @@ int main(int argc, char * argv[])
     cout<<port<<endl;
     CTA2045Translator tr(port);
     tr.connect();
+    tr.shed();
+    // tr.endshed();
     return 0;
 }

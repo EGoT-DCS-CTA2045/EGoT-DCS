@@ -136,3 +136,10 @@ bool CTA2045Translator::connect(){
     connected_ = true;
     return connected_;
 }
+
+bool CTA2045Translator::shed(){
+    if (!connected_)
+        return false;
+    device_->basicShed(0).get(); // shed indefinitely
+    return true;
+}
