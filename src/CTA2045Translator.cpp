@@ -52,7 +52,7 @@ bool CTA2045Translator::disconnect(){
     }
     // disconnect & free
     device_->shutDown();
-    LOG(INFO) <<" device diconnected: SUCCESS"<<endl;
+    LOG(INFO) <<"|=> diconnected: SUCCESS"<<endl;
     if (!emulated_) // clean up
         delete device_;
     device_ = 0;
@@ -121,6 +121,7 @@ bool CTA2045Translator::connect(){
         return connected_;
     }
 
+    /*
 	LOG(INFO) << "==> Query Device Information ";
 	DER_response_timer_.reset();
 	DER_response_ = device_->intermediateGetDeviceInformation().get();
@@ -132,20 +133,40 @@ bool CTA2045Translator::connect(){
         connected_ = false;
         return connected_;
     }
-    LOG(INFO) << " SUCESS";
+    */
+    LOG(INFO) << "|=> connection: SUCESS"<<endl;
     connected_ = true;
     return connected_;
 }
 
 bool CTA2045Translator::shed(){
+    int newState = 0;
     if (!connected_)
         return false;
-    device_->basicShed(0).get(); // shed indefinitely
-    DER_response_ = device_->basicQueryOperationalState().get(); // query op state to verify a change has taken place
+    
+    LOG(INFO) << "==> Shed";
+    DER_response_ = device_->basicShed(0).get(); // shed indefinitely
 #ifdef USE_DEBUG
     LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
 #endif
-    if (DER_response_.responesCode > ResponseCode::OK)
+    if (DER_response_.responesCode > ResponseCode::OK){
+        LOG(ERROR) << "failed to get the shed ack from DER" << strerror(errno);
         return false;
+    } 
+   
+   DER_response_ = device_->basicQueryOperationalState().get(); // query op state to verify a change has taken place
+#ifdef USE_DEBUG
+    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
+#endif
+    newState = DER_response_handler_.get_op_state();
+    if (DER_response_.responesCode > ResponseCode::OK || newState != 2){
+        LOG(ERROR) << "failed to get correct operating state of DER " << strerror(errno);
+        return false;
+    }
+#ifdef USE_DEBUG
+    LOG(WARNING) <<"> New state: "<<newState<<endl;
+#endif
+   
+    LOG(INFO) << "|=> shed: SUCCESS";
     return true;
 }

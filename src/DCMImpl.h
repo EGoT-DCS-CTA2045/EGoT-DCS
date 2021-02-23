@@ -12,6 +12,9 @@ class DCMImpl : public UCMImpl
 
         // ======== inherited & overloaded(to be implemented) ============== 
         virtual bool isMessageTypeSupported(cea2045::MessageTypeCode messageType);
-        void processDeviceInfoResponse(cea2045::cea2045DeviceInfoResponse* message);
+        virtual void processDeviceInfoResponse(cea2045::cea2045DeviceInfoResponse* message);
+        virtual void processOperationalStateReceived(cea2045::cea2045Basic *message);
+        int get_op_state();
     private:
+        int state_;
 };

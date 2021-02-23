@@ -106,6 +106,7 @@ TEST(Translator, SupportIntermediateFail) {
     EXPECT_FALSE(translator.connect());
 }
 
+/*
 // test device failure due to DeviceInfo Query failure
 TEST(Translator, DeviceInfoFail) {
     
@@ -131,6 +132,7 @@ TEST(Translator, DeviceInfoFail) {
     
     EXPECT_FALSE(translator.connect());
 }
+*/
 
 // test successful device connection
 TEST(Translator, SuccessfulConenct) {
