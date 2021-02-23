@@ -141,5 +141,11 @@ bool CTA2045Translator::shed(){
     if (!connected_)
         return false;
     device_->basicShed(0).get(); // shed indefinitely
+    DER_response_ = device_->basicQueryOperationalState().get(); // query op state to verify a change has taken place
+#ifdef USE_DEBUG
+    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
+#endif
+    if (DER_response_.responesCode > ResponseCode::OK)
+        return false;
     return true;
 }
