@@ -1,4 +1,4 @@
-RASPI CONTROL BRANCH
+RASPI CONTROL BRANCH - DCM implementation for raspberry pi zero w 
 # cpp-seed
 This will be a starting point for C++ projects which will auto include gtest and boost libs
 
