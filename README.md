@@ -10,7 +10,7 @@ The requirements are:
 * Boost Libraries
 * Git
 
-### Updated configuration instructions
+### Updated configuration instructions 
 
 `sudo apt-get update -y `
 
@@ -35,6 +35,10 @@ The requirements are:
 `make install`
 
 ### From within the repo root directory
+After you clone this directory, if you want to work with raspi-config, you must manually switch branches (clone automatically grabs main).
+
+To see all branches: ```git checkout -a``` 
+To switch branches: ```git checkout origin/raspi-config```
 
 To configure (must be done first):
 
