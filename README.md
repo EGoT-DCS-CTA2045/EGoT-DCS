@@ -36,11 +36,11 @@ The requirements are:
 
 ### From within the repo root directory
 After you clone this directory, if you want to work with raspi-config, you must manually switch branches (clone automatically grabs main).
+So from the directory where you cloned this repo, change directories into the repo: ```cd EGoT-DCS/```
+To see all branches: ```git branch -a``` 
+To switch branches: ```git checkout raspi-control```
 
-To see all branches: ```git checkout -a``` 
-To switch branches: ```git checkout origin/raspi-config```
-
-To configure (must be done first):
+Now to configure (must be done first):
 
 ```bash
 cmake -S . -B build
