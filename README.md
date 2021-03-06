@@ -14,7 +14,9 @@ The requirements are:
 
 `sudo apt-get update -y `
 
-`apt-get install -y wget pkg-config build-essential git cmake libssl-dev libboost-all-dev`
+`sudo apt-get install -y wget pkg-config build-essential git cmake libssl-dev libboost-all-dev`
+
+`sudo apt-get upgrade`
 
 `mkdir ~/temp`
 
