@@ -11,14 +11,18 @@ The requirements are:
 * Git
 
 ### UPDATED configuration instructions
-```
-RUN apt-get update -y \
-  && apt-get install -y wget pkg-config build-essential git cmake libssl-dev libboost-all-dev \
-  && mkdir ~/temp
-RUN cd ~/temp && wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz \
-  && tar -xf cmake-3.18.4.tar.gz \
-  && cd cmake-3.18.4 && cmake . && make && make install
-  ```
+
+`sudo apt-get update -y `
+`apt-get install -y wget pkg-config build-essential git cmake libssl-dev libboost-all-dev`
+`mkdir ~/temp`
+`cd ~/temp `
+`wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz `
+` tar -xf cmake-3.18.4.tar.gz `
+`cd cmake-3.18.4 `
+`cmake . `
+`make `
+`make install`
+
 ### PREVIOUS configuration instructions
 ```bash
 sudo apt-get update -y \
