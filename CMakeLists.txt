@@ -56,7 +56,7 @@ FetchContent_MakeAvailable(googletest SEP cta2045)
 # Link each target with other targets or add options, etc.
 
 # The executable code is here
-set(USE_DEBUG OFF)
+set(USE_DEBUG ON)
 #set(CMAKE_BUILD_TYPE Debug)
 add_subdirectory(src)
 add_subdirectory(tests)

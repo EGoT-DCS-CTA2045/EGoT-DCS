@@ -3,6 +3,14 @@
 #include <cea2045/device/DeviceFactory.h>
 
 using namespace cea2045;
+
+# define IDLE_NORM 0 
+# define RUN_NORM 1
+# define RUN_CURT 2
+# define RUN_HIEIGH 3 
+# define IDLE_GRID 4
+# define SGD_ERR 5
+
 class CTA2045Translator{
     private:
         char port_[50];
@@ -16,9 +24,12 @@ class CTA2045Translator{
 
         bool check_operation(int op);
         bool state_transition(int new_state);
-        // void display_error(const char* message);
+        // void display_message(int lvl,const char* message);
+        
 #ifdef USE_DEBUG
+        void InitCodes();
         char* response_code_map_[(int)cea2045::ResponseCode::NAK]; // Because NAK code is the greatest (gives the length of the enum)
+        char* op_states_[SGD_ERR];
 #endif
     public:
         CTA2045Translator(); // constructor
@@ -31,8 +42,6 @@ class CTA2045Translator{
         bool shed();
         bool endshed();
         bool levelup();
-#ifdef USE_DEBUG
-        void InitResponseCodes();
-#endif
+
 
 };
