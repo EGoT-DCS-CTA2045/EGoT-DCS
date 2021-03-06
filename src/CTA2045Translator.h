@@ -10,10 +10,11 @@ using namespace cea2045;
 # define RUN_HIEIGH 3 
 # define IDLE_GRID 4
 # define SGD_ERR 5
+# define CHAR_SIZE 100
 
 class CTA2045Translator{
     private:
-        char port_[50];
+        char port_[CHAR_SIZE];
         CEA2045SerialPort* serial_port_;
         ResponseCodes DER_response_;
         MSTimer DER_response_timer_;
@@ -21,15 +22,14 @@ class CTA2045Translator{
         ICEA2045DeviceUCM* device_;
         bool emulated_;
         bool connected_;
-
         bool check_operation(int op);
         bool state_transition(int new_state);
         // void display_message(int lvl,const char* message);
         
 #ifdef USE_DEBUG
         void InitCodes();
-        char* response_code_map_[(int)cea2045::ResponseCode::NAK]; // Because NAK code is the greatest (gives the length of the enum)
-        char* op_states_[SGD_ERR];
+        char response_code_map_[(int)cea2045::ResponseCode::NAK + 1][CHAR_SIZE]; // Because NAK code is the greatest (gives the length of the enum)
+        char op_states_[SGD_ERR+1][CHAR_SIZE];
 #endif
     public:
         CTA2045Translator(); // constructor

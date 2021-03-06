@@ -61,19 +61,19 @@ bool CTA2045Translator::disconnect(){
 #ifdef USE_DEBUG
 void CTA2045Translator::InitCodes(){
     // initialize response codes
-    response_code_map_[(int)ResponseCode::OK] = (char*)"OK";
-    response_code_map_[(int)ResponseCode::TIMEOUT] = (char*)"TIMEOUT";
-    response_code_map_[(int)ResponseCode::BAD_CRC] = (char*)" BAD_CRC";
-    response_code_map_[(int)ResponseCode::INVALID_RESPONSE] = (char*)"INVALID_RESPONSE";
-    response_code_map_[(int)ResponseCode::NO_ACK_RECEIVED] = (char*)"NO_ACK_RECEIVED";
-    response_code_map_[(int)ResponseCode::NAK] = (char*)"NAK";
+    strcpy(response_code_map_[(int)ResponseCode::OK], "OK");
+    strcpy(response_code_map_[(int)ResponseCode::TIMEOUT],"TIMEOUT");
+    strcpy(response_code_map_[(int)ResponseCode::BAD_CRC] , " BAD_CRC");
+    strcpy(response_code_map_[(int)ResponseCode::INVALID_RESPONSE] , "INVALID_RESPONSE");
+    strcpy(response_code_map_[(int)ResponseCode::NO_ACK_RECEIVED] , "NO_ACK_RECEIVED");
+    strcpy(response_code_map_[(int)ResponseCode::NAK] , "NAK");
     // initialize state codes
-    op_states_[IDLE_NORM] = (char*) "IDLE NORMAL";
-    op_states_[RUN_NORM] = (char*) "RUNNING NORMAL";
-    op_states_[RUN_CURT] = (char*) "RUNNING CURTAILED GRID";
-    op_states_[RUN_HIEIGH] = (char*) "RUNNING HEIGHTENED GRID";
-    op_states_[IDLE_GRID] = (char*) "IDLE GRID";
-    op_states_[SGD_ERR] = (char*) "SGD ERROR CONDITION";
+    strcpy(op_states_[IDLE_NORM], "IDLE NORMAL");
+    strcpy(op_states_[RUN_NORM] , "RUNNING NORMAL");
+    strcpy(op_states_[RUN_CURT] , "RUNNING CURTAILED GRID");
+    strcpy(op_states_[RUN_HIEIGH] , "RUNNING HEIGHTENED GRID");
+    strcpy(op_states_[IDLE_GRID] , "IDLE GRID");
+    strcpy(op_states_[SGD_ERR] , "SGD ERROR CONDITION");
     return;
 }
 #endif
@@ -128,8 +128,7 @@ bool CTA2045Translator::connect(){
         return connected_;
     }
 
-    /*
-	LOG(INFO) << "==> Query Device Information ";
+    LOG(INFO) << "==> Query Device Information ";
 	DER_response_timer_.reset();
 	DER_response_ = device_->intermediateGetDeviceInformation().get();
 #ifdef USE_DEBUG
@@ -140,7 +139,7 @@ bool CTA2045Translator::connect(){
         connected_ = false;
         return connected_;
     }
-    */
+    
     LOG(INFO) << "|=> connection: SUCESS"<<endl;
     connected_ = true;
     return connected_;
@@ -188,7 +187,7 @@ bool CTA2045Translator::check_operation(int new_state){
     }
     state = DER_response_handler_.get_op_state();
  #ifdef USE_DEBUG
-     LOG(WARNING) <<"> Recieved state: "<<state<<" -- "<<op_states_[state]<<endl;
+    LOG(WARNING) <<"> Recieved state: "<<state<<" -- "<<op_states_[state]<<endl;
  #endif
     return state == new_state;
 }
