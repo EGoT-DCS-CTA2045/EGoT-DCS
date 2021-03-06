@@ -139,34 +139,65 @@ bool CTA2045Translator::connect(){
     return connected_;
 }
 
+
+// TODO: use a message formatter to avoid code replication!
+
 bool CTA2045Translator::shed(){
-    int newState = 0;
-    if (!connected_)
-        return false;
-    
     LOG(INFO) << "==> Shed";
-    DER_response_ = device_->basicShed(0).get(); // shed indefinitely
-#ifdef USE_DEBUG
-    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
-#endif
-    if (DER_response_.responesCode > ResponseCode::OK){
-        LOG(ERROR) << "failed to get the shed ack from DER" << strerror(errno);
-        return false;
-    } 
-   
-   DER_response_ = device_->basicQueryOperationalState().get(); // query op state to verify a change has taken place
-#ifdef USE_DEBUG
-    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
-#endif
-    newState = DER_response_handler_.get_op_state();
-    if (DER_response_.responesCode > ResponseCode::OK || newState != 2){
-        LOG(ERROR) << "failed to get correct operating state of DER " << strerror(errno);
-        return false;
-    }
-#ifdef USE_DEBUG
-    LOG(WARNING) <<"> New state: "<<newState<<endl;
-#endif
-   
+    // use this as wrapper
+
+    
     LOG(INFO) << "|=> shed: SUCCESS";
     return true;
+}
+
+bool CTA2045Translator::endshed(){
+    LOG(INFO) << "==> Endshed";
+    // use this as wrapper
+
+    
+    LOG(INFO) << "|=> endshed: SUCCESS";
+    return true;
+}
+
+bool CTA2045Translator::levelup(){
+    LOG(INFO) << "==> Levelup";
+    // use this as wrapper
+
+    
+    LOG(INFO) << "|=> levelup: SUCCESS";
+    return true;
+}
+
+
+bool CTA2045Translator::check_operation(int new_state){
+    bool success = false;
+    int state = 0;
+    if(new_state != SHED || new_state != END_SHED || new_state != LOADUP)
+        return success;
+    DER_response_ = device_->basicQueryOperationalState().get();
+    state = DER_response_handler_.get_op_state();
+    success = state == new_state;
+    return success;
+}
+bool CTA2045Translator::state_transition(int new_state){
+    bool transitioned = false;
+    if (!connected_)
+        return false;
+ #ifdef USE_DEBUG
+     LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
+ #endif
+    if (DER_response_.responesCode > ResponseCode::OK){
+        LOG(ERROR) << "failed to get the "<< "{state}"<<" ack from DER" << strerror(errno);
+        return false;
+    }
+    // check if already in state
+    transitioned = check_operation(new_state);
+    if (transitioned)
+        return transitioned;
+    // send a transition
+    //use FDT to avoid code replication
+    // check state again
+    transitioned = check_operation(new_state);
+    return transitioned;
 }

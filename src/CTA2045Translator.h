@@ -13,6 +13,10 @@ class CTA2045Translator{
         ICEA2045DeviceUCM* device_;
         bool emulated_;
         bool connected_;
+
+        bool check_operation(int op);
+        bool state_transition(int new_state);
+        // void display_error(const char* message);
 #ifdef USE_DEBUG
         char* response_code_map_[(int)cea2045::ResponseCode::NAK]; // Because NAK code is the greatest (gives the length of the enum)
 #endif
@@ -25,6 +29,8 @@ class CTA2045Translator{
         bool connect();
         bool disconnect();
         bool shed();
+        bool endshed();
+        bool levelup();
 #ifdef USE_DEBUG
         void InitResponseCodes();
 #endif
