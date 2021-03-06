@@ -10,7 +10,7 @@ The requirements are:
 * Boost Libraries
 * Git
 
-### UPDATED configuration instructions
+### Updated configuration instructions
 
 `sudo apt-get update -y `
 
@@ -34,15 +34,7 @@ The requirements are:
 
 `make install`
 
-### PREVIOUS configuration instructions
-```bash
-sudo apt-get update -y \
-  && apt-get install -y build-essential git cmake libboost-all-dev \
-  && mkdir ~/temp
-sudo cd ~/temp && wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz \
-  && tar -xf cmake-3.18.4.tar.gz \
-  && cd cmake-3.18.4 && cmake . && make && make install
-```
+### From within the repo root directory
 
 To configure (must be done first):
 
