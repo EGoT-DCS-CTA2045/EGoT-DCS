@@ -12,6 +12,11 @@ The requirements are:
 
 ### Updated configuration instructions 
 
+All at once (delete the `mkdir ~/temp` and `cd ~/temp` if you already made it):
+`sudo apt-get update -y && sudo apt-get install -y wget pkg-config build-essential git cmake libssl-dev libboost-all-dev && sudo apt-get upgrade && mkdir ~/temp && cd ~/temp && wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz && tar -xf cmake-3.18.4.tar.gz && cd cmake-3.18.4 && cmake . && make && make install`
+
+Step by step: 
+
 `sudo apt-get update -y `
 
 `sudo apt-get install -y wget pkg-config build-essential git cmake libssl-dev libboost-all-dev`
