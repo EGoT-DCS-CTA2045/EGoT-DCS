@@ -79,16 +79,15 @@ void CTA2045Translator::InitCodes(){
 #endif
 bool CTA2045Translator::connect(){
     char res[100];
+    connected_ = false;
 	if (!serial_port_ || !serial_port_->open()){
 		LOG(ERROR) << "failed to open serial port: " << strerror(errno);
-		connected_ = false;
         return connected_;
 	}
     if(!device_)
 	    device_ = DeviceFactory::createUCM(serial_port_, &DER_response_handler_);
 	if(!device_->start()){
         LOG(ERROR) << "failed to start device: " << strerror(errno);
-		connected_ = false;
         return connected_;
     }  
 
@@ -100,7 +99,6 @@ bool CTA2045Translator::connect(){
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms";
-        connected_ = false;
         return connected_;
     }
 
@@ -112,7 +110,6 @@ bool CTA2045Translator::connect(){
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms";
-        connected_ = false;
         return connected_;
     }
 
@@ -124,7 +121,6 @@ bool CTA2045Translator::connect(){
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms"<<endl;
-        connected_ = false;
         return connected_;
     }
 
@@ -136,8 +132,6 @@ bool CTA2045Translator::connect(){
 #endif
     if (DER_response_.responesCode > ResponseCode::OK){
         LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms"<<endl;
-        connected_ = false;
-        return connected_;
     }
     
     LOG(INFO) << "|=> connection: SUCESS"<<endl;
@@ -149,29 +143,39 @@ bool CTA2045Translator::connect(){
 
 
 bool CTA2045Translator::shed(){
+    bool success = false;
     LOG(INFO) << "==> Shed";
-    // use this as wrapper
-        
-    LOG(INFO) << "|=> shed: SUCCESS";
-    return true;
+    success=state_transition(LOADUP);
+    if (!success){
+        LOG(INFO) << "|=> shed: FAILED";
+        return success;
+    }
+    LOG(INFO) << "|=> Shed: SUCCESS";
+    return success;
 }
 
 bool CTA2045Translator::endshed(){
+    bool success = false;
     LOG(INFO) << "==> Endshed";
-    // use this as wrapper
-
-    
+    success=state_transition(LOADUP);
+    if (!success){
+        LOG(INFO) << "|=> endshed: FAILED";
+        return success;
+    }
     LOG(INFO) << "|=> endshed: SUCCESS";
-    return true;
+    return success;
 }
 
-bool CTA2045Translator::levelup(){
-    LOG(INFO) << "==> Levelup";
-    // use this as wrapper
-
-    
-    LOG(INFO) << "|=> levelup: SUCCESS";
-    return true;
+bool CTA2045Translator::loadup(){
+    bool success = false;
+    LOG(INFO) << "==> Loadup";
+    success=state_transition(LOADUP);
+    if (!success){
+        LOG(INFO) << "|=> loadup: FAILED";
+        return success;
+    }
+    LOG(INFO) << "|=> loadup: SUCCESS";
+    return success;
 }
 
 
@@ -193,9 +197,11 @@ bool CTA2045Translator::check_operation(int new_state){
 }
 bool CTA2045Translator::state_transition(int new_state){
     bool transitioned = false;
+    
+    cout<<"HERE\n";
     if (!connected_)
         return false;
-    if(new_state != SHED || new_state != END_SHED || new_state != LOADUP)
+    if(!(new_state == SHED || END_SHED || LOADUP))
         return transitioned;
     // check if already in state
     transitioned = check_operation(new_state);
@@ -203,7 +209,6 @@ bool CTA2045Translator::state_transition(int new_state){
         return transitioned;
     // send a transition
     //use FDT to avoid code replication
-
     // check state again
     transitioned = check_operation(new_state);
     return transitioned;

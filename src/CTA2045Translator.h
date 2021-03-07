@@ -41,7 +41,7 @@ class CTA2045Translator{
         bool disconnect();
         bool shed();
         bool endshed();
-        bool levelup();
+        bool loadup();
 
 
 };
