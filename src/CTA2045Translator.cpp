@@ -94,45 +94,26 @@ bool CTA2045Translator::connect(){
 	LOG(INFO) << "==> Query data link ";
 	DER_response_timer_.reset();
 	DER_response_ = device_->querySuportDataLinkMessages().get();
-#ifdef USE_DEBUG
-    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
-#endif
-    if (DER_response_.responesCode > ResponseCode::OK){
-        LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms";
-        return connected_;
-    }
+    if (!check_response(DER_response_,DER_response_timer_))
+        return connected_; // failed to receive support data link message query ack
 
 	LOG(INFO) << "==> Query max payload";
 	DER_response_timer_.reset();
-	DER_response_ = device_->queryMaxPayload().get();
-#ifdef USE_DEBUG
-    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
-#endif
-    if (DER_response_.responesCode > ResponseCode::OK){
-        LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms";
-        return connected_;
-    }
+	DER_response_ = device_->queryMaxPayload().get();    
+    if (!check_response(DER_response_,DER_response_timer_))
+        return connected_; // failed to receive max payload message query ack
+
 
 	LOG(INFO) << "==> Query intermediate";
 	DER_response_timer_.reset();
 	DER_response_ = device_->querySuportIntermediateMessages().get();
-#ifdef USE_DEBUG
-    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
-#endif
-    if (DER_response_.responesCode > ResponseCode::OK){
-        LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms"<<endl;
-        return connected_;
-    }
+    if (!check_response(DER_response_,DER_response_timer_))
+        return connected_; 
 
     LOG(INFO) << "==> Query Device Information ";
 	DER_response_timer_.reset();
 	DER_response_ = device_->intermediateGetDeviceInformation().get();
-#ifdef USE_DEBUG
-    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
-#endif
-    if (DER_response_.responesCode > ResponseCode::OK){
-        LOG(ERROR) << " Connection FAILED. Query took: "<<DER_response_timer_.getElapsedMS()<<" ms"<<endl;
-    }
+    check_response(DER_response_,DER_response_timer_); // shouldn't require connection success on this DER response
     
     LOG(INFO) << "|=> connection: SUCESS"<<endl;
     connected_ = true;
@@ -145,7 +126,7 @@ bool CTA2045Translator::connect(){
 bool CTA2045Translator::shed(){
     bool success = false;
     LOG(INFO) << "==> Shed";
-    success=state_transition(LOADUP);
+    success=state_transition(SHED,grid_state_map::shed_state);
     if (!success){
         LOG(INFO) << "|=> shed: FAILED";
         return success;
@@ -157,7 +138,7 @@ bool CTA2045Translator::shed(){
 bool CTA2045Translator::endshed(){
     bool success = false;
     LOG(INFO) << "==> Endshed";
-    success=state_transition(LOADUP);
+    success=state_transition(END_SHED,grid_state_map::endshed_state);
     if (!success){
         LOG(INFO) << "|=> endshed: FAILED";
         return success;
@@ -169,7 +150,7 @@ bool CTA2045Translator::endshed(){
 bool CTA2045Translator::loadup(){
     bool success = false;
     LOG(INFO) << "==> Loadup";
-    success=state_transition(LOADUP);
+    success=state_transition(LOADUP,grid_state_map::loadup_state);
     if (!success){
         LOG(INFO) << "|=> loadup: FAILED";
         return success;
@@ -181,35 +162,60 @@ bool CTA2045Translator::loadup(){
 
 bool CTA2045Translator::check_operation(int new_state){
     int state = -1;
+    DER_response_timer_.reset();
     DER_response_ = device_->basicQueryOperationalState().get();
  #ifdef USE_DEBUG
      LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
  #endif
-    if (DER_response_.responesCode > ResponseCode::OK){
-        LOG(ERROR) << "failed to get the Qeury Op State ack from DER" << strerror(errno);
-        return false;
-    }
+    if (!check_response(DER_response_,DER_response_timer_))
+        return false; // failed to receive op state query ack
+
     state = DER_response_handler_.get_op_state();
  #ifdef USE_DEBUG
     LOG(WARNING) <<"> Recieved state: "<<state<<" -- "<<op_states_[state]<<endl;
- #endif
+ #endif 
     return state == new_state;
 }
-bool CTA2045Translator::state_transition(int new_state){
-    bool transitioned = false;
-    
-    cout<<"HERE\n";
+bool CTA2045Translator::state_transition(int cmd,int new_state){
+    bool transitioned = false;    
     if (!connected_)
         return false;
-    if(!(new_state == SHED || END_SHED || LOADUP))
+    if(!(cmd == SHED || END_SHED || LOADUP))
         return transitioned;
     // check if already in state
     transitioned = check_operation(new_state);
     if (transitioned)
         return transitioned;
+    DER_response_timer_.reset();
     // send a transition
-    //use FDT to avoid code replication
+    switch (cmd)
+    {
+        case SHED:
+            DER_response_ = device_->basicShed(0).get();
+            break;
+        case END_SHED:
+            DER_response_ = device_->basicEndShed(0).get();
+            break;
+        case LOADUP:
+            DER_response_ = device_->basicLoadUp(0).get();
+            break;
+        default: 
+            // no need to take any further actions should never get here           
+            break;
+    }
+    check_response(DER_response_,DER_response_timer_); // return from this will be reflected in operating state
     // check state again
     transitioned = check_operation(new_state);
     return transitioned;
+}
+
+bool CTA2045Translator::check_response(ResponseCodes res,MSTimer tm){
+#ifdef USE_DEBUG
+    LOG(WARNING) <<"> Response: " <<response_code_map_[(int)DER_response_.responesCode]<<endl;
+#endif
+    if (res.responesCode > ResponseCode::OK){
+        LOG(ERROR) << "FAILED to complete query. Query took: "<<tm.getElapsedMS()<<" ms";
+        return false;
+    }
+    return true;
 }

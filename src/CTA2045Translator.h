@@ -11,6 +11,11 @@ using namespace cea2045;
 # define IDLE_GRID 4
 # define SGD_ERR 5
 # define CHAR_SIZE 100
+typedef enum{
+    shed_state = RUN_CURT,
+    endshed_state = IDLE_NORM,
+    loadup_state = RUN_NORM
+}grid_state_map;
 
 class CTA2045Translator{
     private:
@@ -23,7 +28,10 @@ class CTA2045Translator{
         bool emulated_;
         bool connected_;
         bool check_operation(int op);
-        bool state_transition(int new_state);
+        bool state_transition(int cmd,int new_state);
+        bool check_response(ResponseCodes res,MSTimer tm);
+        // grid_function* FDT[FDT_SIZE];
+        // void init_FDT();
         // void display_message(int lvl,const char* message);
         
 #ifdef USE_DEBUG

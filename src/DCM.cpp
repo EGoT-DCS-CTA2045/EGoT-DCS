@@ -8,6 +8,7 @@ int main(int argc, char * argv[])
 {
     char port[20];// used to hold the port
     int c=-1;
+    bool ret = false;
     char prompt[] = "enter:\n0-\texist\n1-\tshed\n2-\tendshed\n3-\tloadup\nINPUT: ";
     // check args length
     if (argc < 2)
@@ -30,13 +31,16 @@ int main(int argc, char * argv[])
                 c = 0;
                 continue;
             case 1:
-                tr.shed();
+                ret = tr.shed();
+                cout<<"RETURN: "<<ret<<endl;
                 break;
             case 2:
-                tr.endshed();
+                ret = tr.endshed();
+                cout<<"RETURN: "<<ret<<endl;
                 break;
             case 3:
-                tr.loadup();
+                ret = tr.loadup();
+                cout<<"RETURN: "<<ret<<endl;
                 break;
             default:
                 cout<<"INCORRECT choice\n";
