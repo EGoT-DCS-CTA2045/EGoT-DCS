@@ -3,10 +3,14 @@
 
 using namespace cea2045;
 
+# define OK_RES (int)cea2045::ResponseCode::OK
+# define TIMEOUT_RES (int)cea2045::ResponseCode::TIMEOUT
+# define NAK_RES (int)cea2045::ResponseCode::NAK
+
 class CEA2045DeviceMock : public ICEA2045DeviceUCM {
     public:
         CEA2045DeviceMock():ICEA2045DeviceUCM(){};
-        std::future<ResponseCodes> Response(int res,int nak){
+        std::future<ResponseCodes> Response(int res,int nak){ // returns a promise of type ReponseCodes which uses passed params
             auto ret = std::async(std::launch::async,[res,nak]()->ResponseCodes{
                 ResponseCodes r; 
                 r.responesCode = (ResponseCode)res;
@@ -22,6 +26,13 @@ class CEA2045DeviceMock : public ICEA2045DeviceUCM {
         MOCK_METHOD0(querySuportDataLinkMessages,std::future<ResponseCodes>());
         MOCK_METHOD0(querySuportIntermediateMessages,std::future<ResponseCodes>());
 
+        MOCK_METHOD1(basicShed,std::future<ResponseCodes>(unsigned char eventDuration));
+        MOCK_METHOD1(basicEndShed,std::future<ResponseCodes>(unsigned char eventDuration));
+        MOCK_METHOD1(basicLoadUp,std::future<ResponseCodes>(unsigned char eventDuration));
+
+        MOCK_METHOD0(basicQueryOperationalState,std::future<ResponseCodes>());
+        // =============== using ======================
+
         MOCK_METHOD3(queryMessageTypeSupported,std::future<ResponseCodes>(MessageCode messageCode, unsigned char messageType1, unsigned char messageType2));
         MOCK_METHOD0(intermediateGetCommodity,std::future<ResponseCodes>());
         MOCK_METHOD0(intermediateGetTemperatureOffset,std::future<ResponseCodes>());
@@ -32,14 +43,10 @@ class CEA2045DeviceMock : public ICEA2045DeviceUCM {
         MOCK_METHOD5(intermediateSetEnergyPrice,std::future<ResponseCodes>(unsigned short , unsigned short ,unsigned char , unsigned int ,unsigned short ));
         MOCK_METHOD7(intermediateStartCycling,std::future<ResponseCodes>(unsigned int , unsigned int, unsigned short ,unsigned char , unsigned char, unsigned char,unsigned char ));
         MOCK_METHOD2(intermediateTerminateCycling,std::future<ResponseCodes>(unsigned int eventID, unsigned char endRandomizationInMinutes));
-        MOCK_METHOD1(basicEndShed,std::future<ResponseCodes>(unsigned char eventDuration));
         MOCK_METHOD1(basicGridEmergency,std::future<ResponseCodes>(unsigned char eventDuration));
-        MOCK_METHOD1(basicLoadUp,std::future<ResponseCodes>(unsigned char eventDuration));
         MOCK_METHOD1(basicOutsideCommConnectionStatus,std::future<ResponseCodes>(OutsideCommuncatonStatusCode code));
         MOCK_METHOD1(basicPresentRelativePrice,std::future<ResponseCodes>(unsigned char relativePriceIndicator));
         MOCK_METHOD1(basicNextRelativePrice,std::future<ResponseCodes>(unsigned char relativePriceIndicator));
-        MOCK_METHOD0(basicQueryOperationalState,std::future<ResponseCodes>());
-        MOCK_METHOD1(basicShed,std::future<ResponseCodes>(unsigned char eventDuration));
         MOCK_METHOD1(basicPowerLevel,std::future<ResponseCodes>(unsigned char powerLevel));
         MOCK_METHOD1(basicCriticalPeakEvent,std::future<ResponseCodes>(unsigned char powerLevel));
 

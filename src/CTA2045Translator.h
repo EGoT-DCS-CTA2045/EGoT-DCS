@@ -23,7 +23,7 @@ class CTA2045Translator{
         CEA2045SerialPort* serial_port_;
         ResponseCodes DER_response_;
         MSTimer DER_response_timer_;
-        DCMImpl DER_response_handler_;
+        DCMImpl* DER_response_handler_;
         ICEA2045DeviceUCM* device_;
         bool emulated_;
         bool connected_;
@@ -41,8 +41,9 @@ class CTA2045Translator{
 #endif
     public:
         CTA2045Translator(); // constructor
-        CTA2045Translator(ICEA2045DeviceUCM*,CEA2045SerialPort*); // overloaded constructor
+        CTA2045Translator(ICEA2045DeviceUCM*,CEA2045SerialPort*,DCMImpl& handler); // overloaded constructor
         CTA2045Translator(char*);// overloaded contructor
+
         ~CTA2045Translator();// destructor
         void ResponseCodeMap(cea2045::ResponseCode code,char*);
         bool connect();
@@ -50,6 +51,4 @@ class CTA2045Translator{
         bool shed();
         bool endshed();
         bool loadup();
-
-
 };

@@ -10,6 +10,7 @@ INITIALIZE_EASYLOGGINGPP
 CTA2045Translator::CTA2045Translator():device_(0),emulated_(false){
     strncpy(port_,"/dev/ttyS6",sizeof(port_)-1); // go with default
     serial_port_ = new CEA2045SerialPort(port_);
+    DER_response_handler_ = new DCMImpl();
 #ifdef USE_DEBUG
     InitCodes();
 #endif
@@ -20,12 +21,14 @@ CTA2045Translator::CTA2045Translator(char* p):serial_port_(0),device_(0),emulate
     strncat(port_,p,sizeof(port_)-1);
     port_[sizeof(port_)-1] = '\0';
     serial_port_ = new CEA2045SerialPort(port_);
+    DER_response_handler_ = new DCMImpl();
 #ifdef USE_DEBUG
     InitCodes();    
 #endif
 }
-CTA2045Translator::CTA2045Translator(ICEA2045DeviceUCM* dev,CEA2045SerialPort* port):serial_port_(port),emulated_(true){
+CTA2045Translator::CTA2045Translator(ICEA2045DeviceUCM* dev,CEA2045SerialPort* port,DCMImpl &handler):serial_port_(port),emulated_(true){
     device_ = dev;
+    DER_response_handler_ = &handler;
 #ifdef USE_DEBUG
     InitCodes();
 #endif
@@ -34,6 +37,7 @@ CTA2045Translator::~CTA2045Translator(){
     // no dynamic mem so far
     if (device_ && !emulated_)
     {
+        delete DER_response_handler_; // delete handler obj
         device_->shutDown();
         delete device_; // free device
         device_ = 0;
@@ -85,7 +89,7 @@ bool CTA2045Translator::connect(){
         return connected_;
 	}
     if(!device_)
-	    device_ = DeviceFactory::createUCM(serial_port_, &DER_response_handler_);
+	    device_ = DeviceFactory::createUCM(serial_port_, DER_response_handler_);
 	if(!device_->start()){
         LOG(ERROR) << "failed to start device: " << strerror(errno);
         return connected_;
@@ -170,7 +174,7 @@ bool CTA2045Translator::check_operation(int new_state){
     if (!check_response(DER_response_,DER_response_timer_))
         return false; // failed to receive op state query ack
 
-    state = DER_response_handler_.get_op_state();
+    state = DER_response_handler_->get_op_state();
  #ifdef USE_DEBUG
     LOG(WARNING) <<"> Recieved state: "<<state<<" -- "<<op_states_[state]<<endl;
  #endif 
@@ -205,7 +209,7 @@ bool CTA2045Translator::state_transition(int cmd,int new_state){
     }
     check_response(DER_response_,DER_response_timer_); // return from this will be reflected in operating state
     // check state again
-    transitioned = check_operation(new_state);
+    transitioned = DER_response_handler_->get_op_state();
     return transitioned;
 }
 
