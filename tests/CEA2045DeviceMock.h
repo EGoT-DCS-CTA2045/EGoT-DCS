@@ -1,4 +1,4 @@
-#include <cea2045/cea2045/device/DeviceFactory.h>
+#include <cea2045/device/DeviceFactory.h>
 #include "gmock/gmock.h"
 
 using namespace cea2045;
