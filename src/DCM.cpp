@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "CTA2045Translator.h"
+#include "easylogging++.h"
 
 INITIALIZE_EASYLOGGINGPP
 
