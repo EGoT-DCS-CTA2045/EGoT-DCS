@@ -1,5 +1,5 @@
 #include "DCMImpl.h"
-#include <cea2045/communicationport/CEA2045SerialPort.h>
+#include <cea2045/cea2045/communicationport/CEA2045SerialPort.h>
 #include <cea2045/device/DeviceFactory.h>
 
 using namespace cea2045;
