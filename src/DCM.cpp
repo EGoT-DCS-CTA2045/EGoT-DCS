@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <wiringPi.h>
 #include "CTA2045Translator.h"
 #include "easylogging++.h"
 #include <cea2045/device/DeviceFactory.h>
@@ -10,7 +11,7 @@ int main(int argc, char * argv[])
 {
     MSTimer timer;
 	bool shutdown = false;
-
+    wiringPiSetup();
 	CEA2045SerialPort sp("/dev/ttyUSB0");
 	UCMImpl ucm;
 	ResponseCodes responseCodes;
