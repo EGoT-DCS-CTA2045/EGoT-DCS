@@ -1,12 +1,19 @@
 #include <iostream>
 #include <string>
-#include <wiringPi.h>
+
 #include "CTA2045Translator.h"
 #include "easylogging++.h"
 #include <cea2045/device/DeviceFactory.h>
 #include <cea2045/communicationport/CEA2045SerialPort.h>
 using namespace cea2045;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include <wiringPi.h>
+#ifdef __cplusplus
+}
+#endif
 int main(int argc, char * argv[])
 {
     MSTimer timer;
