@@ -1,5 +1,5 @@
 RASPI CONTROL BRANCH - DCM implementations for raspberry pi zero w 
-# cpp-seed
+# Raspi-Control
 This will be a starting point for C++ projects which will auto include gtest and boost libs
 
 ## Debian Buster (OS)
