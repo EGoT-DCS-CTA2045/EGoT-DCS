@@ -1,2 +1,0 @@
-/home/pi/Documents/EGoT-DCS/remote_build/cmake-build-r-sd-1/CMakeFiles/rebuild_cache.dir
-/home/pi/Documents/EGoT-DCS/remote_build/cmake-build-r-sd-1/CMakeFiles/edit_cache.dir
