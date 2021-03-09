@@ -2,7 +2,13 @@
 #include <string>
 #include "CTA2045Translator.h"
 
-using namespace std;
+INITIALIZE_EASYLOGGINGPP
+
+#include <cea2045/device/DeviceFactory.h>
+
+#include <cea2045/communicationport/CEA2045SerialPort.h>
+
+using namespace cea2045;
 
 int main(int argc, char * argv[])
 {
