@@ -20,15 +20,16 @@ include(ExternalProject)
 # (But usually don't do this, except maybe for C++ standard)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-enable_testing() # Must be in main file
+#enable_testing() # Must be in main file
 
 # Find packages go here.
 find_package(Boost REQUIRED)
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG        master
-)
+
+#FetchContent_Declare(
+  #googletest
+  #GIT_REPOSITORY https://github.com/google/googletest.git
+  #GIT_TAG        master
+#)
 
 FetchContent_Declare(
   SEP
@@ -43,7 +44,7 @@ FetchContent_Declare(
 )
 
 # CMake 3.14+
-FetchContent_MakeAvailable(googletest SEP cea2045)
+FetchContent_MakeAvailable(SEP cea2045)
 
 # You should usually split this into folders, but this is a simple example
 
