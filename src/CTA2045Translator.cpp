@@ -5,7 +5,7 @@
 
 INITIALIZE_EASYLOGGINGPP
 
-#include <cea2045/util/MSTimer.h>
+#include <cea2045/cea2045/util/MSTimer.h>
 
 CTA2045Translator::CTA2045Translator():device_(0),emulated_(false){
     strncpy(port_,"/dev/ttyS6",sizeof(port_)-1); // go with default
