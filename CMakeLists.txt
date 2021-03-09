@@ -43,7 +43,7 @@ FetchContent_Declare(
 )
 
 # CMake 3.14+
-FetchContent_MakeAvailable(googletest SEP cta2045)
+FetchContent_MakeAvailable(googletest SEP cea2045)
 
 # You should usually split this into folders, but this is a simple example
 
