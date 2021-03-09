@@ -104,7 +104,7 @@
 #ifndef SAMPLE2_SAMPLE2_UCMIMPL_H_
 #define SAMPLE2_SAMPLE2_UCMIMPL_H_
 
-#include <cea2045/cea2045/cea2045/cea2045/processmessage/IUCM.h>
+#include <cea2045/cea2045//cea2045/processmessage/IUCM.h>
 
 #include <condition_variable>
 #include <mutex>
