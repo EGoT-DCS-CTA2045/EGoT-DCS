@@ -6,19 +6,20 @@
 #include <cea2045/device/DeviceFactory.h>
 #include <cea2045/communicationport/CEA2045SerialPort.h>
 using namespace cea2045;
-
+/*
 #ifdef __cplusplus
 extern "C" {
 #endif
 #include <wiringPi.h>
 #ifdef __cplusplus
 }
-#endif
+#endif*/
+
 int main(int argc, char * argv[])
 {
     MSTimer timer;
 	bool shutdown = false;
-    wiringPiSetup();
+    //wiringPiSetup();
 	CEA2045SerialPort sp("/dev/ttyUSB0");
 	UCMImpl ucm;
 	ResponseCodes responseCodes;
