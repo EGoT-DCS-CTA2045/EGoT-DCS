@@ -37,7 +37,7 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(
-  cta2045
+  cea2045
   GIT_REPOSITORY https://github.com/epri-dev/CTA-2045-UCM-CPP-Library.git
   GIT_TAG        master
 )
