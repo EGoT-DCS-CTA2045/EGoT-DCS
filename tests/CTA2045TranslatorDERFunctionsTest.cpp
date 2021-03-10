@@ -1,7 +1,6 @@
 #include "CEA2045DeviceMock.h"
 #include "CEA2045SerialPortMock.h"
 #include "DCMImplMock.h"
-// #include "../src/UCMImpl.h"
 #include "../src/CTA2045Translator.h"
 #include "gtest/gtest.h"
 #include<boost/bind.hpp>
@@ -12,11 +11,11 @@ using ::testing::AtLeast;
 
 
 void TEST_SUCCESS_LOADUP(CTA2045Translator trans,CEA2045DeviceMock* dev){
-    trans.loadup();
+    // trans.loadup();
     ASSERT_EQ(true,true);
 }
 void TEST_FAIL_LOADUP(CTA2045Translator trans,CEA2045DeviceMock* dev){
-    trans.loadup();
+    // trans.loadup();
 
     ASSERT_EQ(true,true);
 }
@@ -24,8 +23,6 @@ void TEST_SUCCESS_SHED(CTA2045Translator trans,CEA2045DeviceMock* dev){
     ASSERT_EQ(true,true);    
 }
 void TEST_FAIL_SHED(CTA2045Translator trans,CEA2045DeviceMock* dev){
-    std::cout<<"IN F SHED"<<endl;
-
     ASSERT_EQ(true,true);
 }
 void TEST_SUCCESS_END_SHED(CTA2045Translator trans,CEA2045DeviceMock* dev){
@@ -35,6 +32,7 @@ void TEST_FAIL_END_SHED(CTA2045Translator trans,CEA2045DeviceMock* dev){
     ASSERT_EQ(true,true);    
 }
 void TEST_SUCCESS_OP_STATE(CTA2045Translator trans,CEA2045DeviceMock* dev){
+    // trans.check_operation(1);
     ASSERT_EQ(true,true);
 }
 void TEST_FAIL_OP_STATE(CTA2045Translator trans,CEA2045DeviceMock* dev){
@@ -68,33 +66,38 @@ TEST(Translator, TestRunner){
     
     // =================== end successful connection setup =================
 
+    // EXPECT_CALL(dev,basicQueryOperationalState())
+    // .Times(AtLeast(1))
+    // .WillRepeatedly(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+    // handle DCMImpl mock returns
+    // EXPECT_CALL(dcm,basic)
     EXPECT_TRUE(translator.connect());
 
     TEST_SUCCESS_OP_STATE(translator,&dev);
-    TEST_SUCCESS_LOADUP(translator,&dev);
-    TEST_FAIL_LOADUP(translator,&dev);
+    // TEST_SUCCESS_LOADUP(translator,&dev);
+    // TEST_FAIL_LOADUP(translator,&dev);
     
-    TEST_SUCCESS_SHED(translator,&dev);
-    TEST_FAIL_SHED(translator,&dev);
+    // TEST_SUCCESS_SHED(translator,&dev);
+    // TEST_FAIL_SHED(translator,&dev);
 
     
-    TEST_SUCCESS_END_SHED(translator,&dev);
-    TEST_FAIL_END_SHED(translator,&dev);
+    // TEST_SUCCESS_END_SHED(translator,&dev);
+    // TEST_FAIL_END_SHED(translator,&dev);
     
-    TEST_FAIL_OP_STATE(translator,&dev);
+    // TEST_FAIL_OP_STATE(translator,&dev);
 
-    TEST_SUCCESS_OP_STATE(translator,&dev);
-    TEST_SUCCESS_LOADUP(translator,&dev);
-    TEST_FAIL_LOADUP(translator,&dev);
+    // TEST_SUCCESS_OP_STATE(translator,&dev);
+    // TEST_SUCCESS_LOADUP(translator,&dev);
+    // TEST_FAIL_LOADUP(translator,&dev);
     
-    TEST_SUCCESS_SHED(translator,&dev);
-    TEST_FAIL_SHED(translator,&dev);
+    // TEST_SUCCESS_SHED(translator,&dev);
+    // TEST_FAIL_SHED(translator,&dev);
 
     
-    TEST_SUCCESS_END_SHED(translator,&dev);
-    TEST_FAIL_END_SHED(translator,&dev);
+    // TEST_SUCCESS_END_SHED(translator,&dev);
+    // TEST_FAIL_END_SHED(translator,&dev);
     
-    TEST_FAIL_OP_STATE(translator,&dev);
+    // TEST_FAIL_OP_STATE(translator,&dev);
     // std::cout<<"DER STATE: "<<translator.operating_state();
     
 }

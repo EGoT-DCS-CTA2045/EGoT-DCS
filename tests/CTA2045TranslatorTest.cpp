@@ -1,9 +1,10 @@
 
 #include "CEA2045DeviceMock.h"
 #include "../src/CTA2045Translator.h"
-#include "DCMImplMock.h"
 #include "CEA2045SerialPortMock.h"
-// #include "../src/UCMImpl.h"
+#include "../src/UCMImpl.h"
+
+#include "DCMImplMock.h"
 #include "gtest/gtest.h"
 #include <boost/bind.hpp>
 
@@ -243,5 +244,7 @@ TEST(Translator, DoubleDiconnectFail){
     
     EXPECT_TRUE(translator.disconnect());
     EXPECT_FALSE(translator.disconnect());
+    std::cout<<"____________\n";
+    std::cout<<"____________\n";
     
 }

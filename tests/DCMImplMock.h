@@ -1,5 +1,5 @@
-#include "DCMImpl.h"
 #include "gmock/gmock.h"
+#include "../src/DCMImpl.h"
 
 class DCMImplMock : public DCMImpl {
     public:

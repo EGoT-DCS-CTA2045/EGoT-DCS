@@ -3,6 +3,8 @@
 // TODO: revisit google C++ style guide
 
 #include "UCMImpl.h"
+    #ifndef DCMImpl_H
+    #define DCMImpl_H
 
 class DCMImpl : public UCMImpl
 {
@@ -18,3 +20,4 @@ class DCMImpl : public UCMImpl
     private:
         int state_;
 };
+#endif
