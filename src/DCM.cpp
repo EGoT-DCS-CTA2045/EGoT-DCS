@@ -6,6 +6,7 @@
 #include <cea2045/device/DeviceFactory.h>
 #include <cea2045/communicationport/CEA2045SerialPort.h>
 using namespace cea2045;
+using std::cout;
 /*
 #ifdef __cplusplus
 extern "C" {
@@ -17,10 +18,11 @@ extern "C" {
 
 int main(int argc, char * argv[])
 {
+    cout<<"INITIATING"<<endl;
     MSTimer timer;
 	bool shutdown = false;
     //wiringPiSetup();
-	CEA2045SerialPort sp("/dev/ttyUSB0");
+	CEA2045SerialPort sp("/dev/ttyAMA0");
 	UCMImpl ucm;
 	ResponseCodes responseCodes;
 
