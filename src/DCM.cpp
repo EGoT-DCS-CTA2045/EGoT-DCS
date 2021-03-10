@@ -1,12 +1,13 @@
 #include <iostream>
-#include <cstring>
+#include <string>
 #include "CTA2045Translator.h"
 
 using namespace std;
 
 int main(int argc, char * argv[])
 {
-    char port[20];// used to hold the port
+    int sz = 20;
+    char port[sz];// used to hold the port
     int c=-1;
     bool ret = false;
     char prompt[] = "enter:\n0-\texist\n1-\tshed\n2-\tendshed\n3-\tloadup\nINPUT: ";
@@ -17,9 +18,9 @@ int main(int argc, char * argv[])
         exit(1);
     }
     // copy to the length of port
-    strncpy(port,argv[1],sizeof(port)-1);
+    strncpy(port,argv[1],sz-2);
     // add EOX char
-    port[sizeof(port)-1] = '\0'; // translator does that already
+    port[sz-1] = '\0'; // translator does that already
     cout<<port<<endl;
     CTA2045Translator tr(port);
     tr.connect();

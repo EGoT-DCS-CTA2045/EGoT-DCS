@@ -13,6 +13,7 @@ RUN cd ~/temp && wget https://github.com/Kitware/CMake/releases/download/v3.18.4
 
 ADD . /app
 WORKDIR /app
+
 RUN cmake -S . -B build && cmake --build build
 
 CMD ./build/tests/all-tests

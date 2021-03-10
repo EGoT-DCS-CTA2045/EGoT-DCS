@@ -37,13 +37,13 @@ FetchContent_Declare(
 )
 
 FetchContent_Declare(
-  cta2045
+  cea2045
   GIT_REPOSITORY https://github.com/epri-dev/CTA-2045-UCM-CPP-Library.git
   GIT_TAG        master
 )
 
 # CMake 3.14+
-FetchContent_MakeAvailable(googletest SEP cta2045)
+FetchContent_MakeAvailable(SEP cea2045)
 
 # You should usually split this into folders, but this is a simple example
 
@@ -56,7 +56,6 @@ FetchContent_MakeAvailable(googletest SEP cta2045)
 # Link each target with other targets or add options, etc.
 
 # The executable code is here
-set(USE_DEBUG OFF)
-#set(CMAKE_BUILD_TYPE Debug)
+set(USE_DEBUG ON)
 add_subdirectory(src)
-add_subdirectory(tests)
+#add_subdirectory(tests)
