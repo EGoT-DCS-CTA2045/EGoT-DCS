@@ -54,9 +54,7 @@ int main(int argc, char * argv[])
 
 	timer.reset();
 
-	digitalWrite(transmit, 1);
 	responseCodes = device->querySuportDataLinkMessages().get();
-    digitalWrite(transmit, 0);
 	LOG(INFO) << "  query data link elapsed time: " << timer.getElapsedMS();
 
 	timer.reset();
