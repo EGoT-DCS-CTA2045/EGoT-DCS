@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/app.dir/DCM.cpp.o CMakeFiles/app.dir/DCMImpl.cpp.o CMakeFiles/app.dir/CTA2045Translator.cpp.o CMakeFiles/app.dir/UCMImpl.cpp.o -o app  -Wl,-rpath,/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/cea2045-build ../_deps/cea2045-build/libcea2045.so -lpthread 

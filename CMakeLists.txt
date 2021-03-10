@@ -55,7 +55,8 @@ FetchContent_MakeAvailable(SEP cea2045)
 # add_library(MyLibExample simple_lib.cpp simple_lib.hpp)
 
 # Link each target with other targets or add options, etc.
-
+#target_link_libraries(EGoT-DCS-CTA2045 ${wiringPi})
+#add_definitions(-std=c++0x -L/usr/include/wiringPi.h  -lwiringPi )
 # The executable code is here
 add_subdirectory(src)
 #add_subdirectory(tests)
