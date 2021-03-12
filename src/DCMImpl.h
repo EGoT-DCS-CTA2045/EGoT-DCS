@@ -16,7 +16,7 @@ class DCMImpl : public UCMImpl
         virtual bool isMessageTypeSupported(cea2045::MessageTypeCode messageType);
         virtual void processDeviceInfoResponse(cea2045::cea2045DeviceInfoResponse* message);
         virtual void processOperationalStateReceived(cea2045::cea2045Basic *message);
-        int get_op_state();
+        virtual int get_op_state();
     private:
         int state_;
 };

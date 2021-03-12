@@ -130,7 +130,7 @@ bool CTA2045Translator::connect(){
 bool CTA2045Translator::shed(){
     bool success = false;
     LOG(INFO) << "==> Shed";
-    success=state_transition(SHED,grid_state_map::shed_state);
+    success=state_transition(SHED,grid_state_map::SHED_STATE);
     if (!success){
         LOG(INFO) << "|=> shed: FAILED";
         return success;
@@ -142,7 +142,7 @@ bool CTA2045Translator::shed(){
 bool CTA2045Translator::endshed(){
     bool success = false;
     LOG(INFO) << "==> Endshed";
-    success=state_transition(END_SHED,grid_state_map::endshed_state);
+    success=state_transition(END_SHED,grid_state_map::ENDSHED_STATE);
     if (!success){
         LOG(INFO) << "|=> endshed: FAILED";
         return success;
@@ -154,7 +154,7 @@ bool CTA2045Translator::endshed(){
 bool CTA2045Translator::loadup(){
     bool success = false;
     LOG(INFO) << "==> Loadup";
-    success=state_transition(LOADUP,grid_state_map::loadup_state);
+    success=state_transition(LOADUP,grid_state_map::LOADUP_STATE);
     if (!success){
         LOG(INFO) << "|=> loadup: FAILED";
         return success;
@@ -209,7 +209,7 @@ bool CTA2045Translator::state_transition(int cmd,int new_state){
     }
     check_response(DER_response_,DER_response_timer_); // return from this will be reflected in operating state
     // check state again
-    transitioned = DER_response_handler_->get_op_state();
+    transitioned = check_operation(new_state);
     return transitioned;
 }
 

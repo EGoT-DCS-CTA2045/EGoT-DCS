@@ -12,10 +12,11 @@ using namespace cea2045;
 # define SGD_ERR 5
 # define CHAR_SIZE 100
 typedef enum{
-    shed_state = RUN_CURT,
-    endshed_state = IDLE_NORM,
-    loadup_state = RUN_NORM
+    SHED_STATE = RUN_CURT,
+    ENDSHED_STATE = IDLE_NORM,
+    LOADUP_STATE = RUN_NORM
 }grid_state_map;
+
 
 class CTA2045Translator{
     private:
@@ -27,6 +28,7 @@ class CTA2045Translator{
         ICEA2045DeviceUCM* device_;
         bool emulated_;
         bool connected_;
+        void init_FDT();
         bool check_operation(int op);
         bool state_transition(int cmd,int new_state);
         bool check_response(ResponseCodes res,MSTimer tm);
