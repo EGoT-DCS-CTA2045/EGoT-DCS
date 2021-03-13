@@ -39,7 +39,7 @@ void SETUP_STATE(CEA2045SerialPortMock &sp,CEA2045DeviceMock &dev,DCMImplMock & 
         .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
     
     // =================== end successful connection setup =================
-    // expecting QPS call
+    // expecting QOS call
     EXPECT_CALL(dev,basicQueryOperationalState())
         .Times(AtLeast(1))
         .WillRepeatedly(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
@@ -237,13 +237,129 @@ TEST(EndShed,ENDSHED_FAIL_DIFFERENT_STATE){
     ASSERT_EQ(ret,false);   
 }
 
-void TEST_FAIL_END_SHED(CTA2045Translator trans,CEA2045DeviceMock* dev){
-    ASSERT_EQ(true,true);    
+TEST(LoadUp,LOADUP_OP_STATE_FAIL){
+    CEA2045SerialPortMock sp("FAKE PORT");
+    CEA2045DeviceMock dev;
+    DCMImplMock dcm;
+    CTA2045Translator trans(&dev,&sp,dcm);
+    EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(true));
+    EXPECT_CALL(dev, start()).Times(AtLeast(1)).WillOnce(Return(true));
+    // initialize successful setup
+    EXPECT_CALL(dev, querySuportDataLinkMessages())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+
+    EXPECT_CALL(dev, queryMaxPayload())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+
+    EXPECT_CALL(dev, querySuportIntermediateMessages())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+
+    EXPECT_CALL(dev, intermediateGetDeviceInformation())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+    
+    EXPECT_CALL(dev,basicQueryOperationalState())
+        .Times(2)
+        .WillRepeatedly(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,TIMEOUT_RES, NAK_RES)));
+    
+    EXPECT_TRUE(trans.connect());
+
+    EXPECT_CALL(dev,basicLoadUp) // attempts to loadup
+        .Times(1)
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,TIMEOUT_RES, NAK_RES)));
+
+    EXPECT_CALL(dcm,get_op_state) // should never check operating state since QOS fails
+        .Times(0);
+
+    bool ret = trans.loadup();
+    ASSERT_EQ(ret,false);
 }
-void TEST_SUCCESS_OP_STATE(CTA2045Translator trans,CEA2045DeviceMock* dev,DCMImplMock* dcm){
-    // trans.check_operation(1);
-    ASSERT_EQ(true,true);
+
+TEST(Shed,SHED_OP_STATE_FAIL){
+    CEA2045SerialPortMock sp("FAKE PORT");
+    CEA2045DeviceMock dev;
+    DCMImplMock dcm;
+    CTA2045Translator trans(&dev,&sp,dcm);
+    EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(true));
+    EXPECT_CALL(dev, start()).Times(AtLeast(1)).WillOnce(Return(true));
+    // initialize successful setup
+    EXPECT_CALL(dev, querySuportDataLinkMessages())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+
+    EXPECT_CALL(dev, queryMaxPayload())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+
+    EXPECT_CALL(dev, querySuportIntermediateMessages())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+
+    EXPECT_CALL(dev, intermediateGetDeviceInformation())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+    
+    EXPECT_CALL(dev,basicQueryOperationalState())
+        .Times(2)
+        .WillRepeatedly(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,TIMEOUT_RES, NAK_RES)));
+    
+    EXPECT_TRUE(trans.connect());
+
+    EXPECT_CALL(dev,basicShed) // attempts to shed
+        .Times(1)
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,TIMEOUT_RES, NAK_RES)));
+
+    EXPECT_CALL(dcm,get_op_state) // should never check operating state since QOS fails
+        .Times(0);
+
+    bool ret = trans.shed();
+    ASSERT_EQ(ret,false);
 }
+
+TEST(EndShed,ENDSHED_OP_STATE_FAIL){
+    CEA2045SerialPortMock sp("FAKE PORT");
+    CEA2045DeviceMock dev;
+    DCMImplMock dcm;
+    CTA2045Translator trans(&dev,&sp,dcm);
+    EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(true));
+    EXPECT_CALL(dev, start()).Times(AtLeast(1)).WillOnce(Return(true));
+    // initialize successful setup
+    EXPECT_CALL(dev, querySuportDataLinkMessages())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+
+    EXPECT_CALL(dev, queryMaxPayload())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+
+    EXPECT_CALL(dev, querySuportIntermediateMessages())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+
+    EXPECT_CALL(dev, intermediateGetDeviceInformation())
+        .Times(AtLeast(1))
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+    
+    EXPECT_CALL(dev,basicQueryOperationalState())
+        .Times(2)
+        .WillRepeatedly(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,TIMEOUT_RES, NAK_RES)));
+    
+    EXPECT_TRUE(trans.connect());
+
+    EXPECT_CALL(dev,basicEndShed) // attempts to endshed
+        .Times(1)
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,TIMEOUT_RES, NAK_RES)));
+
+    EXPECT_CALL(dcm,get_op_state) // should never check operating state since QOS fails
+        .Times(0);
+
+    bool ret = trans.endshed();
+    ASSERT_EQ(ret,false);
+}
+
 void TEST_FAIL_OP_STATE(CTA2045Translator trans,CEA2045DeviceMock* dev){
     ASSERT_EQ(true,true);
 }
