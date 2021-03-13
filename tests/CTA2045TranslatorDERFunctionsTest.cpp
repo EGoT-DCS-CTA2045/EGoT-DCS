@@ -46,7 +46,7 @@ void SETUP_STATE(CEA2045SerialPortMock &sp,CEA2045DeviceMock &dev,DCMImplMock & 
        
     EXPECT_TRUE(tr.connect());
 }
-TEST(LoadUpTest,LOADUP_SUCCESS){
+TEST(LoadUp,LOADUP_SUCCESS){
     // create translator args
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
@@ -71,7 +71,7 @@ TEST(LoadUpTest,LOADUP_SUCCESS){
     ASSERT_EQ(ret,true);
 }
 
-TEST(LoadUpTest,LOADUP_SUCCESS_DER_ALREADY_IN_LOADUP){
+TEST(LoadUp,LOADUP_SUCCESS_ALREADY_IN_LOADUP){
     // translator
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
@@ -115,30 +115,91 @@ TEST(LoadUp,LOADUP_FAIL_DIFFERENT_STATE){
     ASSERT_EQ(ret,false);
 }
 
-void TEST_SUCCESS_SHED(CTA2045Translator trans,CEA2045DeviceMock &dev,DCMImplMock &dcm){
-    // create translator args
+TEST(Shed,SHED_SUCCESS){
+    // translator
+    CEA2045SerialPortMock sp("FAKE PORT");
+    CEA2045DeviceMock dev;
+    DCMImplMock dcm;
+    CTA2045Translator trans(&dev,&sp,dcm);
+    SETUP_STATE(sp,dev,dcm,trans);
+
+     EXPECT_CALL(dev,basicShed)
+        .Times(1)
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+
+    EXPECT_CALL(dcm,get_op_state)
+        .Times(2)
+        .WillOnce(Return(ENDSHED_STATE))
+        .WillOnce(Return(SHED_STATE));
+    
+    bool ret = trans.shed();
+    ASSERT_EQ(ret,true);   
+}
+
+TEST(Shed,SHED_SUCCESS_ALREAD_IN_SHED){
+    // translator
+    CEA2045SerialPortMock sp("FAKE PORT");
+    CEA2045DeviceMock dev;
+    DCMImplMock dcm;
+    CTA2045Translator trans(&dev,&sp,dcm);
+    SETUP_STATE(sp,dev,dcm,trans);
+
+     EXPECT_CALL(dev,basicShed)
+        .Times(0);
+        
+    EXPECT_CALL(dcm,get_op_state)
+        .Times(1)
+        .WillOnce(Return(SHED_STATE));
+    
+    bool ret = trans.shed();
+    ASSERT_EQ(ret,true);   
+}
+
+TEST(Shed,SHED_FAIL_DIFFERENT_STATE){
+    // translator
+    CEA2045SerialPortMock sp("FAKE PORT");
+    CEA2045DeviceMock dev;
+    DCMImplMock dcm;
+    CTA2045Translator trans(&dev,&sp,dcm);
+    SETUP_STATE(sp,dev,dcm,trans);
+
+     EXPECT_CALL(dev,basicShed)
+        .Times(1)
+        .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+
+        
+    EXPECT_CALL(dcm,get_op_state)
+        .Times(2)
+        .WillOnce(Return(ENDSHED_STATE))
+        .WillOnce(Return(ENDSHED_STATE));
+    
+    bool ret = trans.shed();
+    ASSERT_EQ(ret,false);   
+}
+
+TEST(EndShed,ENDSHED_SUCCESS){
+    // translator
     // CEA2045SerialPortMock sp("FAKE PORT");
     // CEA2045DeviceMock dev;
     // DCMImplMock dcm;
     // CTA2045Translator trans(&dev,&sp,dcm);
     // SETUP_STATE(sp,dev,dcm,trans);
 
-    //  EXPECT_CALL(dev,basicShed)
-    // .Times(1)
-    // .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
+    //  EXPECT_CALL(dev,basicEndShed)
+    //     .Times(1)
+    //     .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,OK_RES, NAK_RES)));
 
+        
     // EXPECT_CALL(dcm,get_op_state)
-    // .Times(2)
-    // .WillOnce(Return(END_SHED))
-    // .WillOnce(Return(SHED_STATE));
+    //     .Times(2)
+    //     .WillOnce(Return(LOADUP_STATE))
+    //     .WillOnce(Return(ENDSHED_STATE));
     
-    // bool ret = trans.shed();
+    // bool ret = trans.endshed();
     // ASSERT_EQ(ret,true);   
 }
-void TEST_FAIL_SHED(CTA2045Translator trans,CEA2045DeviceMock* dev){
-    ASSERT_EQ(true,true);
-}
-void TEST_SUCCESS_END_SHED(CTA2045Translator trans,CEA2045DeviceMock* dev){
+
+TEST_SUCCESS_END_SHED(CTA2045Translator trans,CEA2045DeviceMock* dev){
     ASSERT_EQ(true,true);
 }
 void TEST_FAIL_END_SHED(CTA2045Translator trans,CEA2045DeviceMock* dev){
