@@ -32,9 +32,6 @@ class CTA2045Translator{
         bool check_operation(int op);
         bool state_transition(int cmd,int new_state);
         bool check_response(ResponseCodes res,MSTimer tm);
-        // grid_function* FDT[FDT_SIZE];
-        // void init_FDT();
-        // void display_message(int lvl,const char* message);
         
 #ifdef USE_DEBUG
         void InitCodes();
