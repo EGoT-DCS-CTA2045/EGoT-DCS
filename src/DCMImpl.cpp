@@ -31,3 +31,14 @@ void DCMImpl::processDeviceInfoResponse(cea2045::cea2045DeviceInfoResponse* mess
 	LOG(INFO) << "firmware date: "
 			<< 2000 + (int)message->firmwareYear20xx << "-" << (int)message->firmwareMonth << "-" << (int)message->firmwareDay;
 }
+
+void DCMImpl::processOperationalStateReceived(cea2045::cea2045Basic *message)
+{
+	LOG(INFO) << "operational state received " << (int)message->opCode2;
+	state_ = (int)message->opCode2;
+}
+
+int DCMImpl::get_op_state()
+{
+	return state_;
+}

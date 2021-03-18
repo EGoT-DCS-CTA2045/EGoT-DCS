@@ -43,7 +43,7 @@ FetchContent_Declare(
 )
 
 # CMake 3.14+
-FetchContent_MakeAvailable(SEP cea2045)
+FetchContent_MakeAvailable(googletest SEP cea2045)
 
 # You should usually split this into folders, but this is a simple example
 
@@ -56,5 +56,6 @@ FetchContent_MakeAvailable(SEP cea2045)
 # Link each target with other targets or add options, etc.
 
 # The executable code is here
+set(USE_DEBUG OFF)
 add_subdirectory(src)
-#add_subdirectory(tests)
+add_subdirectory(tests)

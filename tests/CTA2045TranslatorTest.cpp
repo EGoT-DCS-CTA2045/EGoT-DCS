@@ -1,9 +1,12 @@
+
 #include "CEA2045DeviceMock.h"
+#include "../src/CTA2045Translator.h"
 #include "CEA2045SerialPortMock.h"
 #include "../src/UCMImpl.h"
-#include "../src/CTA2045Translator.h"
+
+#include "DCMImplMock.h"
 #include "gtest/gtest.h"
-#include<boost/bind.hpp>
+#include <boost/bind.hpp>
 
 using ::testing::AtLeast;
 using ::testing::Return;
@@ -13,9 +16,8 @@ using ::testing::Invoke;
 TEST(Translator, SerialPortNULL) {
     
     CEA2045DeviceMock dev;
-    
-    CTA2045Translator translator(&dev,0);
-    
+    DCMImplMock dcm;
+    CTA2045Translator translator(&dev,0,dcm);
     EXPECT_FALSE(translator.connect());
 }
 
@@ -24,10 +26,10 @@ TEST(Translator, SerialPortFail) {
     
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
-
+    DCMImplMock dcm;
     EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(false));
 
-    CTA2045Translator translator(&dev,&sp);
+    CTA2045Translator translator(&dev,&sp,dcm);
     
     EXPECT_FALSE(translator.connect());
 }
@@ -37,11 +39,12 @@ TEST(Translator, DeviceStartFail) {
     
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
+    DCMImplMock dcm;
     
     EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(true));
     EXPECT_CALL(dev,start()).Times(AtLeast(1)).WillOnce(Return(false));
     
-    CTA2045Translator translator(&dev,&sp);
+    CTA2045Translator translator(&dev,&sp,dcm);
     
     EXPECT_FALSE(translator.connect());
 }
@@ -51,14 +54,14 @@ TEST(Translator, SupportDataLinkFail) {
     
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
-    
+    DCMImplMock dcm;
     EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(true));
     EXPECT_CALL(dev,start()).Times(AtLeast(1)).WillOnce(Return(true));
     EXPECT_CALL(dev,querySuportDataLinkMessages())
         .Times(AtLeast(1))
         .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,1,7)));
     
-    CTA2045Translator translator(&dev,&sp);
+    CTA2045Translator translator(&dev,&sp,dcm);
     
     EXPECT_FALSE(translator.connect());
 }
@@ -68,7 +71,7 @@ TEST(Translator, MaxPayloadFail) {
     
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
-    
+    DCMImplMock dcm;
     EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(true));
     EXPECT_CALL(dev,start()).Times(AtLeast(1)).WillOnce(Return(true));
     EXPECT_CALL(dev,querySuportDataLinkMessages())
@@ -78,7 +81,7 @@ TEST(Translator, MaxPayloadFail) {
         .Times(AtLeast(1))
         .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,1,7)));
     
-    CTA2045Translator translator(&dev,&sp);
+    CTA2045Translator translator(&dev,&sp,dcm);
     
     EXPECT_FALSE(translator.connect());
 }
@@ -88,7 +91,7 @@ TEST(Translator, SupportIntermediateFail) {
     
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
-    
+    DCMImplMock dcm;
     EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(true));
     EXPECT_CALL(dev,start()).Times(AtLeast(1)).WillOnce(Return(true));
     EXPECT_CALL(dev,querySuportDataLinkMessages())
@@ -101,7 +104,7 @@ TEST(Translator, SupportIntermediateFail) {
         .Times(AtLeast(1))
         .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,1,7)));
     
-    CTA2045Translator translator(&dev,&sp);
+    CTA2045Translator translator(&dev,&sp,dcm);
     
     EXPECT_FALSE(translator.connect());
 }
@@ -111,6 +114,7 @@ TEST(Translator, DeviceInfoFail) {
     
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
+    DCMImplMock dcm;
     
     EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(true));
     EXPECT_CALL(dev,start()).Times(AtLeast(1)).WillOnce(Return(true));
@@ -127,16 +131,16 @@ TEST(Translator, DeviceInfoFail) {
         .Times(AtLeast(1))
         .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,1,7)));
     
-    CTA2045Translator translator(&dev,&sp);
+    CTA2045Translator translator(&dev,&sp,dcm);
     
-    EXPECT_FALSE(translator.connect());
+    EXPECT_TRUE(translator.connect()); // connection shouldn't depend on device info
 }
 
 // test successful device connection
 TEST(Translator, SuccessfulConenct) {
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
-    
+    DCMImplMock dcm;
     // serial port expectation
     EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(true));
 
@@ -164,7 +168,7 @@ TEST(Translator, SuccessfulConenct) {
         .WillOnce(Invoke(boost::bind(&CEA2045DeviceMock::Response,&dev,0,7)));
 
     // create translator object
-    CTA2045Translator translator(&dev,&sp);
+    CTA2045Translator translator(&dev,&sp,dcm);
     // expectation of unit
     EXPECT_TRUE(translator.connect());
 }
@@ -173,7 +177,8 @@ TEST(Translator, SuccessfulConenct) {
 TEST(Translator, SuccessfulDiconnect){
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
-    CTA2045Translator translator(&dev,&sp);
+    DCMImplMock dcm;
+    CTA2045Translator translator(&dev,&sp,dcm);
     EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(true));
     EXPECT_CALL(dev, start()).Times(AtLeast(1)).WillOnce(Return(true));
 
@@ -201,8 +206,9 @@ TEST(Translator, SuccessfulDiconnect){
 // test NULL device (non existent)
 TEST(Translator, DiconnectFail){
     CEA2045SerialPortMock sp("FAKE PORT");
+    DCMImplMock dcm;
     
-    CTA2045Translator translator(NULL,&sp); 
+    CTA2045Translator translator(NULL,&sp,dcm); 
     
     EXPECT_FALSE(translator.disconnect());
 }
@@ -211,7 +217,8 @@ TEST(Translator, DiconnectFail){
 TEST(Translator, DoubleDiconnectFail){
     CEA2045SerialPortMock sp("FAKE PORT");
     CEA2045DeviceMock dev;
-    CTA2045Translator translator(&dev,&sp); 
+    DCMImplMock dcm;
+    CTA2045Translator translator(&dev,&sp,dcm); 
     
     EXPECT_CALL(sp,open()).Times(AtLeast(1)).WillOnce(Return(true));
     EXPECT_CALL(dev, start()).Times(AtLeast(1)).WillOnce(Return(true));
@@ -237,5 +244,7 @@ TEST(Translator, DoubleDiconnectFail){
     
     EXPECT_TRUE(translator.disconnect());
     EXPECT_FALSE(translator.disconnect());
+    std::cout<<"____________\n";
+    std::cout<<"____________\n";
     
 }
