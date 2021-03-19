@@ -143,6 +143,7 @@ src/app: src/CMakeFiles/app.dir/DCMImpl.cpp.o
 src/app: src/CMakeFiles/app.dir/CTA2045Translator.cpp.o
 src/app: src/CMakeFiles/app.dir/UCMImpl.cpp.o
 src/app: src/CMakeFiles/app.dir/build.make
+src/app: /usr/lib/libwiringPi.so
 src/app: _deps/cea2045-build/libcea2045.so
 src/app: src/CMakeFiles/app.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable app"

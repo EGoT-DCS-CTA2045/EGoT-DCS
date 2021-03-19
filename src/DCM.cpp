@@ -8,6 +8,8 @@
 using namespace cea2045;
 using std::cout;
 
+
+/*
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -15,13 +17,14 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-//#include <wiringPi.h>
-/*extern "C" {
 #include <wiringPi.h>
-}*/
+extern "C" {
+#include <wiringPi.h>
+}
+ */
 
 bool RUNNING = true;
-const int transmit = 1; //GPIO 18 (wiringPi 1)
+//const int transmit = 1; //GPIO 18 (wiringPi 1)
 
 // Callback handler if CTRL-C signal is detected
 void my_handler(int s) {
@@ -36,8 +39,8 @@ int main(int argc, char * argv[])
     std::signal(SIGINT, my_handler);
     MSTimer timer;
 	bool shutdown = false;
-    wiringPiSetupGpio();
-    pinMode(transmit, OUTPUT);
+    //wiringPiSetupGpio();
+    //pinMode(transmit, OUTPUT);
 	CEA2045SerialPort sp("/dev/ttyAMA0");
 	UCMImpl ucm;
 	ResponseCodes responseCodes;

@@ -295,6 +295,9 @@ TEST:BOOL=OFF
 //Set all warnings to errors
 WERROR:BOOL=OFF
 
+//Path to a library.
+WIRINGPI_LIBRARIES:FILEPATH=/usr/lib/libwiringPi.so
+
 //Value Computed by CMake
 cea2045_BINARY_DIR:STATIC=/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/cea2045-build
 
