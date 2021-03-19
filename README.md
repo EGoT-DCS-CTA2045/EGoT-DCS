@@ -1,6 +1,7 @@
-RASPI CONTROL BRANCH - DCM implementations for raspberry pi zero w 
-# Raspi-Control
-This will be a starting point for C++ projects which will auto include gtest and boost libs
+RASPI CONTROL - SSH DEVELOPMENT - DCM implementation for raspberry pi zero w 
+# ssh-dev, branched from raspi-control, Branch for development using remote-ssh toolchains (in CLion)
+This is a branch of raspi-control specifically meant to share common source between desktop and remote (pi) environments, using a remote toolchain in CLion.
+Executable app for epri-dev sample2 program refactored into src/DCM.cpp, compiling in cmake-remote-repo-3 
 
 ## Debian Buster (OS)
 The requirements are:
