@@ -1,5 +1,5 @@
 RASPI CONTROL - SSH DEVELOPMENT - DCM implementation for raspberry pi zero w 
-# ssh-dev, branched from raspi-control, Branch for development using remote-ssh toolchains (in CLion)
+# ssh-dev, branched from raspi-control for development using remote-ssh toolchains 
 This is a branch of raspi-control specifically meant to share common source between desktop and remote (pi) environments, using a remote toolchain in CLion.
 Executable app for epri-dev sample2 program refactored into src/DCM.cpp, compiling in cmake-remote-repo-3 
 
