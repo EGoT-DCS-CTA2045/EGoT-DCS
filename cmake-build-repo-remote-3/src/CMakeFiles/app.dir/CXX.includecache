@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+/home/pi/Documents/EGoT-DCS/src/CTA2045Translator.cpp
+CTA2045Translator.h
+/home/pi/Documents/EGoT-DCS/src/CTA2045Translator.h
+easylogging++.h
+/home/pi/Documents/EGoT-DCS/src/easylogging++.h
+cea2045/util/MSTimer.h
+-
+
 /home/pi/Documents/EGoT-DCS/src/CTA2045Translator.h
 DCMImpl.h
 /home/pi/Documents/EGoT-DCS/src/DCMImpl.h
@@ -31,10 +39,28 @@ wiringPi.h
 -
 wiringPi.h
 -
+wiringPi.h
+-
+
+/home/pi/Documents/EGoT-DCS/src/DCMImpl.cpp
+DCMImpl.h
+/home/pi/Documents/EGoT-DCS/src/DCMImpl.h
+easylogging++.h
+/home/pi/Documents/EGoT-DCS/src/easylogging++.h
 
 /home/pi/Documents/EGoT-DCS/src/DCMImpl.h
 UCMImpl.h
 /home/pi/Documents/EGoT-DCS/src/UCMImpl.h
+
+/home/pi/Documents/EGoT-DCS/src/UCMImpl.cpp
+UCMImpl.h
+/home/pi/Documents/EGoT-DCS/src/UCMImpl.h
+easylogging++.h
+/home/pi/Documents/EGoT-DCS/src/easylogging++.h
+cea2045/util/MSTimer.h
+-
+chrono
+-
 
 /home/pi/Documents/EGoT-DCS/src/UCMImpl.h
 cea2045/processmessage/IUCM.h
