@@ -1,6 +1,11 @@
-RASPI CONTROL BRANCH - DCM implementations for raspberry pi zero w 
-# Raspi-Control
-This will be a starting point for C++ projects which will auto include gtest and boost libs
+SSH DEVELOPMENT - DCM implementation for raspberry pi zero w 
+# ssh-dev, branched from raspi-control for development using remote-ssh toolchains 
+This is a branch of raspi-control specifically meant to share common source between desktop and remote (pi) environments, using a remote toolchain in CLion.
+Executable app for epri-dev sample2 program refactored into src/DCM.cpp, compiling in cmake-remote-repo-3 
+#### THIS CODE WILL NOT COMPILE AS IS ON A RASPI - THE SERIAL PORT USED (ttyAMA0) NEEDS TO BE FREED FROM CONSOLE USE FIRST
+Run `sudo raspi-config` and in interface settings, go to Serial, and turn off shell access through serial console (but leave serial hardware on)
+
+Then go to \boot\config.txt, and add the line `dtoverlay=disablt-bt` then save it and run `sudo systemctl disable hciuart`
 
 ## Debian Buster (OS)
 The requirements are:
@@ -43,7 +48,7 @@ Step by step:
 After you clone this directory, if you want to work with raspi-config, you must manually switch branches (clone automatically grabs main).
 So from the directory where you cloned this repo, change directories into the repo: ```cd EGoT-DCS/```
 To see all branches: ```git branch -a``` 
-To switch branches: ```git checkout raspi-control```
+To switch branches: ```git checkout ssh-dev```
 
 Now to configure (must be done first):
 

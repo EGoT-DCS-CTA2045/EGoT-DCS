@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="SEP"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\cmake-build-repo-remote-3\;CMake Files\cmake-build-repo-remote-3\_deps\;CMake Files\cmake-build-repo-remote-3\_deps\sep-src\;CMake Files\cmake-build-repo-remote-3\_deps\sep-src\model\;CMake Files\cmake-build-repo-remote-3\_deps\cea2045-src\;CMake Files\src\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Model">
+				<Option output="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model/libModel.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/include"/>
+					<Add directory="/usr/include/c++/8"/>
+					<Add directory="/usr/include/arm-linux-gnueabihf/c++/8"/>
+					<Add directory="/usr/include/c++/8/backward"/>
+					<Add directory="/usr/lib/gcc/arm-linux-gnueabihf/8/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed"/>
+					<Add directory="/usr/include/arm-linux-gnueabihf"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model/Makefile&quot;  VERBOSE=1 Model"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Model/fast">
+				<Option output="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model/libModel.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/include"/>
+					<Add directory="/usr/include/c++/8"/>
+					<Add directory="/usr/include/arm-linux-gnueabihf/c++/8"/>
+					<Add directory="/usr/include/c++/8/backward"/>
+					<Add directory="/usr/lib/gcc/arm-linux-gnueabihf/8/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/arm-linux-gnueabihf/8/include-fixed"/>
+					<Add directory="/usr/include/arm-linux-gnueabihf"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model/Makefile&quot;  VERBOSE=1 Model/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-build/model/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/active_power.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/date_time_interval.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/der_control.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/der_control_base.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/end_device_control.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/event.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/event_status.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/fixed_var.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/flow_reservation_request.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/flow_reservation_response.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/freq_droop_type.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/offset.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/per_cent.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/power_factor_with_excitation.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/randomizable_event.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/reactive_power.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/request_status.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/resource.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/respondable_resource.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/respondable_subscribable_identified_object.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/set_point.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/signed_per_cent.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/signed_real_energy.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/subscribable_resource.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/target_reduction.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/version_information.cpp">
+			<Option target="Model"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\cmake-build-repo-remote-3\_deps\sep-src\"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/SEPConfig.cmake.in">
+			<Option virtualFolder="CMake Files\cmake-build-repo-remote-3\_deps\sep-src\"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/sep-src/model/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\cmake-build-repo-remote-3\_deps\sep-src\model\"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/cmake-build-repo-remote-3/_deps/cea2045-src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\cmake-build-repo-remote-3\_deps\cea2045-src\"/>
+		</Unit>
+		<Unit filename="/home/pi/Documents/EGoT-DCS/src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\src\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
