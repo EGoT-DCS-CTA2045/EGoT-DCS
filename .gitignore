@@ -37,8 +37,8 @@
 /docs/*
 /cmake-build-repo-remote-3/*
 /reference/*
+/cmake-build-debug/
 
 # Log files
 **/logs/*
 .*
-/cmake-build-debug/
