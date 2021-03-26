@@ -10,7 +10,7 @@ RUN apt-get update -y \
 RUN cd ~/temp && wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz \
   && tar -xf cmake-3.18.4.tar.gz \
   && cd cmake-3.18.4 && cmake . && make && make install
-RUN useradd -m user && yes password | passwd user && apt-get install ssh #for CLion development
+RUN useradd -m user && yes password | passwd user && apt-get install ssh -y #for CLion development
 RUN service ssh start && service ssh enable && service ssh status
 RUN apt install vim -y
 
