@@ -76,10 +76,6 @@ To build:
 ``` bash
 docker build -f Dockerfile.buster -t cppseed .
 ```
-To run with open ssh port "user" "password" for remote development:
-
-```docker container run -d --cap-add sys_ptrace -p127.0.0.1:2222:22 cppseed```
-
 To run tests:
 
 ```bash
@@ -97,6 +93,8 @@ To run and attach terminal for troubleshooting:
 ```bash
 docker container run -it cppseed /bin/bash
 ```
+To run with (maybe) mapped port for ssh remote dev:
+``` docker container run -it --cap-add sys_ptrace -p127.0.0.1:2222:22 cppseed /bin/bash ```
 
 To cleanup all docker containers, images, and volumnes that are unused:
 
