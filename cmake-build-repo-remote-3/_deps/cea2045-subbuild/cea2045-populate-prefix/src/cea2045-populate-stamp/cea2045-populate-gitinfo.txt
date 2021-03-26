@@ -1,3 +1,0 @@
-repository='https://github.com/epri-dev/CTA-2045-UCM-CPP-Library.git'
-module=''
-tag='origin'
