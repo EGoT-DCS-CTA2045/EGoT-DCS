@@ -12,6 +12,8 @@ RUN cd ~/temp && wget https://github.com/Kitware/CMake/releases/download/v3.18.4
   && cd cmake-3.18.4 && cmake . && make && make install
 RUN useradd -m user && yes password | passwd user && apt-get install ssh #for CLion development
 RUN service ssh start && service ssh enable && service ssh status
+RUN apt install vim -y
+
 
 ADD . /app
 WORKDIR /app
