@@ -38,6 +38,9 @@
 /cmake-build-repo-remote-3/*
 /reference/*
 /cmake-build-debug/
+/cmake-build-cppseed/
+/cmake-build-repo-remote-3/
+/CMakeFiles/
 
 # Log files
 **/logs/*

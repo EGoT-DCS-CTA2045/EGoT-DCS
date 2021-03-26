@@ -1,2 +1,38 @@
-/home/temp/cmake-3.18.4/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /tmp/tmp.gfzrIsc77v
-CMake Error: The current CMakeCache.txt directory /tmp/tmp.gfzrIsc77v/CMakeCache.txt is different than the directory c:/Users/whits/STUFF/Local_Env/local_EGoT-raspi-control/EGoT-DCS where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt
+/home/temp/cmake-3.18.4/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /app
+-- The CXX compiler identification is GNU 8.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Boost: /usr/include (found version "1.67.0")  
+-- The C compiler identification is GNU 8.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+CMake Warning (dev) at cmake-build-cppseed/_deps/cea2045-src/CMakeLists.txt:2 (project):
+  Policy CMP0048 is not set: project() command manages VERSION variables.
+  Run "cmake --help-policy CMP0048" for policy details.  Use the cmake_policy
+  command to set the policy and suppress this warning.
+
+  The following variable(s) would be set to empty:
+
+    PROJECT_VERSION
+    PROJECT_VERSION_MAJOR
+    PROJECT_VERSION_MINOR
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+CMake Warning (dev) at cmake-build-cppseed/_deps/cea2045-src/CMakeLists.txt:43 (if):
+  Policy CMP0064 is not set: Support new TEST if() operator.  Run "cmake
+  --help-policy CMP0064" for policy details.  Use the cmake_policy command to
+  set the policy and suppress this warning.
+
+  TEST will be interpreted as an operator when the policy is set to NEW.
+  Since the policy is not set the OLD behavior will be used.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /app/cmake-build-cppseed
