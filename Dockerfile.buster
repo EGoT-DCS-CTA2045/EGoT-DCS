@@ -10,6 +10,7 @@ RUN apt-get update -y \
 RUN cd ~/temp && wget https://github.com/Kitware/CMake/releases/download/v3.18.4/cmake-3.18.4.tar.gz \
   && tar -xf cmake-3.18.4.tar.gz \
   && cd cmake-3.18.4 && cmake . && make && make install
+RUN useradd -m user && yes password | passwd user #for CLion development
 
 ADD . /app
 WORKDIR /app
