@@ -99,6 +99,8 @@ docker container run -it --cap-add sys_ptrace -p127.0.0.1:2222:22 cppseed /bin/b
 ```
 Then run: ```service start ssh```
 And to connect from another system: ```ssh user@localhost -p 2222``` password ```password```
+To connect root: install an editor (```apt-get install vim```) then edit /etc/ssh/sshd_config, uncomment ```#PermitRootLogin prohibit-password``` and change
+it to ```PermitRootLogin yes``` and then save, and run ```service ssh restart``` and ssh in using ```ssh root@localhost -p 2222```
 
 
 To cleanup all docker containers, images, and volumnes that are unused:
