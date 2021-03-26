@@ -1,0 +1,2 @@
+/home/temp/cmake-3.18.4/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /tmp/tmp.gfzrIsc77v
+CMake Error: The current CMakeCache.txt directory /tmp/tmp.gfzrIsc77v/CMakeCache.txt is different than the directory c:/Users/whits/STUFF/Local_Env/local_EGoT-raspi-control/EGoT-DCS where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt
