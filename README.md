@@ -76,6 +76,9 @@ To build:
 ``` bash
 docker build -f Dockerfile.buster -t cppseed .
 ```
+To run with open ssh port "user" "password" for remote development:
+
+```docker container run -d --cap-add sys_ptrace -p127.0.0.1:2222:22 cppseed```
 
 To run tests:
 
