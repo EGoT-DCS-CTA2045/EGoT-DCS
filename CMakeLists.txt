@@ -59,4 +59,6 @@ FetchContent_MakeAvailable(SEP cea2045)
 #add_definitions(-std=c++0x -L/usr/include/wiringPi.h  -lwiringPi )
 # The executable code is here
 add_subdirectory(src)
+add_subdirectory(xml_writer)
+
 #add_subdirectory(tests)
