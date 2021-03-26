@@ -94,6 +94,7 @@ To run and attach terminal for troubleshooting:
 docker container run -it cppseed /bin/bash
 ```
 To run with (maybe) mapped port for ssh remote dev:
+
 ``` docker container run -it --cap-add sys_ptrace -p127.0.0.1:2222:22 cppseed /bin/bash ```
 
 To cleanup all docker containers, images, and volumnes that are unused:
