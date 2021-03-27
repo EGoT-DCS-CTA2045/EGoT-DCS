@@ -44,7 +44,7 @@ Step by step:
 After you clone this directory, if you want to work with raspi-config, you must manually switch branches (clone automatically grabs main).
 So from the directory where you cloned this repo, change directories into the repo: ```cd EGoT-DCS/```
 To see all branches: ```git branch -a``` 
-To switch branches: ```git checkout raspi-control```
+To switch branches: ```git checkout ssh-dev```
 
 Now to configure (must be done first):
 
