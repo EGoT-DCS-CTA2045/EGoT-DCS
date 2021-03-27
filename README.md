@@ -1,6 +1,5 @@
- SSH DEVELOPMENT - DCM implementation for raspberry pi zero w 
 
-### ssh-dev, branched from raspi-control, for development using remote-ssh toolchains (either to raspi or docker container)
+# SSH-DEV, branched from raspi-control, for development using remote-ssh toolchains (either to raspi or docker container)
 This is a branch of raspi-control specifically meant to share common source between desktop and remote (pi) environments, using a remote toolchain in CLion.
 Executable app for epri-dev sample2 program refactored into src/DCM.cpp, compiling in cmake-remote-repo-3 
 
@@ -70,8 +69,8 @@ To run:
 ```bash
 ./build/src/app
 ```
-## Docker
-If you wish to develop on a different system that has docker installed I have provided a dockerfile to setup the same development environment within a container. 
+## Docker (Updated Dockerfile for ssh remote development)
+If you wish to develop on a different system that has docker installed Tylor has provided a dockerfile to setup a development environment within a container, and it's been modified to provision for remote development via ssh (though there are additional steps to follow). 
 
 To build:
 ``` bash
@@ -94,18 +93,20 @@ To run and attach terminal for troubleshooting:
 ```bash
 docker container run -it cppseed /bin/bash
 ```
+To cleanup all docker containers, images, and volumnes that are unused:
+
+```bash
+docker system prune -a
+```
+### Additional Instructions for Configuring Docker Container for SSH-Based Remote Development
 To run with mapped port for ssh remote dev:
 ```bash
 docker container run -it --cap-add sys_ptrace -p127.0.0.1:2222:22 cppseed /bin/bash
 ```
 Then run: ```service start ssh```
 And to connect from another system: ```ssh user@localhost -p 2222``` password ```password```
+
 To connect root: install an editor (```apt-get install vim```) then edit /etc/ssh/sshd_config, uncomment ```#PermitRootLogin prohibit-password``` and change
 it to ```PermitRootLogin yes``` and then save, and run ```service ssh restart``` then change root password with ```passwd root``` (I change it to "password" since the IP is localhost), then ssh into root using ```ssh root@localhost -p 2222```
 
 
-To cleanup all docker containers, images, and volumnes that are unused:
-
-```bash
-docker system prune -a
-```
