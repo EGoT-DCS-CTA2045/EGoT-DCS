@@ -1,7 +1,7 @@
 
 # SSH-DEV, branched from raspi-control, for development using remote-ssh toolchains (either to raspi or docker container)
 This is a branch of raspi-control specifically meant to share common source between desktop and remote (pi) environments, using a remote toolchain in CLion.
-Executable app for epri-dev sample2 program refactored into src/DCM.cpp, compiling in cmake-remote-repo-3 
+Executable ```app``` for epri-dev sample2 program refactored into src/DCM.cpp. Executable ```announce``` for XML Adapter.
 
 ### Debian Buster (OS)
 The requirements are:
