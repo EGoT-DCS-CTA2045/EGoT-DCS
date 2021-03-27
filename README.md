@@ -105,7 +105,7 @@ docker container run -it --cap-add sys_ptrace -p127.0.0.1:2222:22 cppseed /bin/b
 ```
 then run: ```service ssh start``` and you can check with ```service ssh status```
 
-To connect to root via ssh: change root password with ```passwd root``` (I change it to "password" since the IP is localhost), then ssh into root using ```ssh root@localhost -p 2222```
+To connect to root via ssh: first change container root password with ```passwd root``` (I change it to "password" since the IP is localhost), then ssh into root using ```ssh root@localhost -p 2222```
 
 ### To manually allow ssh into root (the Dockerfile should do it automatically)
 install an editor (```apt-get install vim```) then edit /etc/ssh/sshd_config, uncomment ```#PermitRootLogin prohibit-password``` and change
