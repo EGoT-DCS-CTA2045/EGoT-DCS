@@ -11,7 +11,9 @@ RUN cd ~/../home/temp && wget https://github.com/Kitware/CMake/releases/download
   && tar -xf cmake-3.18.4.tar.gz \
   && cd cmake-3.18.4 && cmake . && make && make install
   
-RUN useradd -m user && yes password | passwd user && apt-get install ssh -y #for CLion development
+#RUN useradd -m user && yes password | passwd user
+RUN apt-get install ssh -y # ---- for CLion development
+RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config # ------ change root login options
 
 RUN apt-get install gdb -y #gdb
 #RUN apt install vim -y
