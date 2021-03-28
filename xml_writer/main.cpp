@@ -8,11 +8,13 @@
 using std::string;
 using std::cout;
 using std::endl;
+namespace announcer = dcm_src::xml;
 
 int main()
 {
-    dcm_src::CTA2045ToXMLAdapter XMLVersionOfCommand;
-    cout << "HELLO WORLD" << endl;
+    announcer::CTA2045ToXMLAdapter XMLAdapter;
+    cout << "WTF IS GOING ON" << endl;
 
-    XMLVersionOfCommand.GenerateTestFile();
+    //XMLAdapter.GenerateTestFile();
+    XMLAdapter.ReadTestFile();
 }
