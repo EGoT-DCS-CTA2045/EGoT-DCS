@@ -1,6 +1,6 @@
 #include <iostream>
+#include <fstream>
 #include <string>
-//Boost libs
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
@@ -15,22 +15,33 @@
 
 namespace dcm_src
 {
+namespace xml
+{
 /* -------------------------------------------------------------------
  * This class creates xml strings to be sent to the DTM
  * via an http POST. The xml strings are notifications
  * of the CTA-2045 commands that are being sent to the DER.
  * -------------------------------------------------------------------
  */
+const std::string testing_file_name = "test_file.xml";
+
 class CTA2045ToXMLAdapter
 {
     protected:
         std::string xml_notification_;
         std::string test_file_name_;
+        boost::property_tree::ptree tree_;
+
     public:
-        CTA2045ToXMLAdapter(): xml_notification_("NO DATA"), test_file_name_("command_adapter_test_file.xml")
+        CTA2045ToXMLAdapter() : xml_notification_("NO DATA"), test_file_name_(testing_file_name)
         {}
+
         ~CTA2045ToXMLAdapter();
+
         void GenerateTestFile();
+        void ReadTestFile();
 
 };
+
+}//namespace xml
 }// namespace dcm_src
