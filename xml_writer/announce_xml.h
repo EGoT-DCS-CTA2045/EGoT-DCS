@@ -27,20 +27,17 @@ const std::string testing_file_name = "test_file.xml";
 
 class CTA2045ToXMLAdapter
 {
-    protected:
-        std::string xml_notification_;
-        std::string test_file_name_;
-        boost::property_tree::ptree tree_;
-
     public:
         CTA2045ToXMLAdapter() : xml_notification_("NO DATA"), test_file_name_(testing_file_name)
         {}
-
         ~CTA2045ToXMLAdapter();
-
         void GenerateTestFile();
         void ReadTestFile();
 
+    private:
+        std::string xml_notification_;
+        std::string test_file_name_;
+        boost::property_tree::ptree tree_;
 };
 
 }//namespace xml
