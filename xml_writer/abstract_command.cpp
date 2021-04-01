@@ -1,10 +1,7 @@
 #include "abstract_command.h"
 
-<<<<<<< HEAD
 //namespacing for this file
-=======
 
->>>>>>> dc481bf655327a3fb8c47186775278b609baca32
 using std::cout;
 using std::endl;
 using std::string;
@@ -47,11 +44,7 @@ void DERCommand::testing()
     cout<<"----------Testing----------------------"<<endl;
     tree_.put("command.type", command_);
 
-<<<<<<< HEAD
     outputTreeToTerminal();
-=======
-    outputTree();
->>>>>>> dc481bf655327a3fb8c47186775278b609baca32
 }
 void DERCommand::makeShed()
 {
@@ -67,21 +60,14 @@ void DERCommand::makeShed()
     tree_.put("command.duration", dur);
     tree_.put("command.logged", std::time(0));
 
-<<<<<<< HEAD
     outputTreeToTerminal();
 }
 void DERCommand::outputTreeToTerminal()
-=======
-    outputTree();
-}
-void DERCommand::outputTree()
->>>>>>> dc481bf655327a3fb8c47186775278b609baca32
 {
     std::stringstream ss;
     pt::write_xml(ss, tree_); //write tree to stringstream
     cout << "TREE: " << endl << endl << ss.str() << endl << endl; //output string created by stringstream
 }
-<<<<<<< HEAD
 void DERCommand::appendTreeToTestFile()
 {
     cout << "append tree to test file" << endl;
@@ -89,8 +75,6 @@ void DERCommand::appendTreeToTestFile()
     file << endl << endl << endl << "TEST2" << endl;
     file.close();
 }
-=======
->>>>>>> dc481bf655327a3fb8c47186775278b609baca32
 
 }//namespace xml
 }//namespace dcm_src
