@@ -15,7 +15,7 @@ void XMLAdapterTest();
 
 int main()
 {
-    cout<<"     TESTING i     "<<endl;
+    cout<<"     TESTING k     "<<endl;
     XMLAdapterTest();
     //InterfaceCommandTest();
 }

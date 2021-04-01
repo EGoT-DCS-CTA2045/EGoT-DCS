@@ -27,3 +27,42 @@
 
 <?xml version="1.0" encoding="utf-8"?>
 <message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617318838</start><duration>3.1415</duration></command><logged>1617318838</logged></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617318882</start><duration>3.1415</duration></command><logged>1617318882</logged></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617319405</start><duration>3.1415</duration></command><logged>1617319405</logged></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617319595</start><duration>3.1415</duration></command><logged>1617319595</logged></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617319619</start><duration>3.1415</duration></command><logged>1617319619</logged></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617319622</start><duration>3.1415</duration></command><logged>1617319622</logged></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617319635</start><duration>3.1415</duration></command><logged>1617319635</logged></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617319655</start><duration>3.1415</duration></command><logged>1617319655</logged></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617319676</start><duration>3.1415</duration></command><logged>1617319676</logged></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617319678</start><duration>3.1415</duration></command><logged>1617319678</logged></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617319694</start><duration>3.1415</duration></command><logged>1617319694</logged></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><logged>1617319715</logged><content><command><type>SHED</type><start>1617319715</start><duration>3.1415</duration></command></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><logged>1617319933</logged><content><command><type>SHED</type><start>1617319933</start><duration>3.1415</duration></command></content></message>
+
+<?xml version="1.0" encoding="utf-8"?>
+<message><from>DCM</from><to>DER</to><content><command><type>SHED</type><start>1617319939</start><duration>3.1415</duration></command><expect_response>1</expect_response></content><logged>1617319939</logged></message>

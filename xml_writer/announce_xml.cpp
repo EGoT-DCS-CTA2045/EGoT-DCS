@@ -65,10 +65,8 @@ void XMLCommandAdapter::OutputTreeToTerminal()
 {
     std::stringstream ss;
     //pt::write_xml(ss, tree_); //write tree to stringstream
-    //write_xml(filename, tree, std::locale(), xml_writer_make_settings(' ', 4)); <- locale() arg for writing to file
-    pt::write_xml(ss, tree_, pt::xml_writer_make_settings<std::string>(' ', 4));
+    pt::write_xml(ss, tree_, pt::xml_writer_make_settings<std::string>(' ', 4)); //<- this works to format the tree nicely
     cout << "TREE: " << endl << endl << ss.str() << endl << endl; //output string created by stringstream
-    //pt::write_xml(ss, tree_, pt::xml_writer_make_settings<std::string>(' ', 4));
 }
 void XMLCommandAdapter::Load()
 {
@@ -90,7 +88,8 @@ void XMLCommandAdapter::MakeCommand(string type)
     tree_.put("message.content.command.type", type);
     tree_.put("message.content.command.start", start_time);
     tree_.put("message.content.command.duration", dur);
-    tree_.put("message.content.logged", std::time(0));
+    tree_.put("message.content.expect_response", 1);
+    tree_.put("message.logged", std::time(0));
 }
 
 }//namespace xml
