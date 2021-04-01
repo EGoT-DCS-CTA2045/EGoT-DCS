@@ -29,6 +29,14 @@ void CTA2045ToXMLAdapter::GenerateTestFile()
 
     pt::write_xml(test_file_name_, tree_);
 }
+void CTA2045ToXMLAdapter::GenerateNamedTestFile(string src)
+{
+    cout << "Generate Named Testfile" << endl;
+    cout << "Test file name: " << src << endl;
+
+    tree_.put("CREATED.date", "4/1/2021");
+    pt::write_xml(src, tree_);
+}
 
 void CTA2045ToXMLAdapter::ReadTestFile()
 {
