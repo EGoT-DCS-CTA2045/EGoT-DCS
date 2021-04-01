@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 #include <fstream>
 #include <string>
 #include <boost/property_tree/ptree.hpp>
@@ -30,7 +31,9 @@ class DERCommand {
         {
             return command_;
         }
-        std::string testing();
+        void testing();
+        void makeShed();
+        void outputTree();
 
     private:
         std::string command_;

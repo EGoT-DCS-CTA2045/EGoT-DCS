@@ -18,6 +18,7 @@ int main()
 {
     announcer::CTA2045ToXMLAdapter XMLAdapter;
     //cout << "WTF IS GOING ON" << endl;
+    cout<<"why won't this work"<<endl;
 
     //XMLAdapter.GenerateTestFile();
     //XMLAdapter.ReadTestFile();
@@ -29,7 +30,10 @@ void XMLAdapterTest()
 }
 void DERCommandTest()
 {
+    cout<<"dercommandTest creating command object..."<<endl;
     announcer::DERCommand command;
-
+    cout<<"now testing..."<<endl;
     command.testing();
+    command.makeShed();
+    cout<<"test over"<<endl;
 }
