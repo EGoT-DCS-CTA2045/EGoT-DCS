@@ -1,4 +1,11 @@
 
 
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <command><type>LOAD</type><start>1617315606</start><duration>3.1415</duration><logged>1617315606</logged></command>
+=======
+<command><type>LOAD</type><start>1617315606</start><duration>3.1415</duration><logged>1617315606</logged></command>
+
+<?xml version="1.0" encoding="utf-8"?>
+<command><type>SHED</type><start>1617315712</start><duration>3.1415</duration><logged>1617315712</logged></command>
+>>>>>>> 37e28511ac7232b0e5af824a7f3906361f0e83d9
