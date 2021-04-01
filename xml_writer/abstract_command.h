@@ -21,7 +21,11 @@ namespace xml
  * throughout the DCM architecture.
  * -------------------------------------------------------------------
  */
+<<<<<<< HEAD
 class DERCommand {
+=======
+    class DERCommand: public std::string {
+>>>>>>> dc481bf655327a3fb8c47186775278b609baca32
     public:
         DERCommand();
         DERCommand(const DERCommand &);
@@ -33,8 +37,12 @@ class DERCommand {
         }
         void testing();
         void makeShed();
+<<<<<<< HEAD
         void outputTreeToTerminal();
         void appendTreeToTestFile();
+=======
+        void outputTree();
+>>>>>>> dc481bf655327a3fb8c47186775278b609baca32
 
     private:
         std::string command_;
