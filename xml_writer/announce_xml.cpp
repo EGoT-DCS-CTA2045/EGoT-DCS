@@ -64,8 +64,11 @@ void XMLCommandAdapter::AppendTreeToTestLog(std::string log_path)
 void XMLCommandAdapter::OutputTreeToTerminal()
 {
     std::stringstream ss;
-    pt::write_xml(ss, tree_); //write tree to stringstream
+    //pt::write_xml(ss, tree_); //write tree to stringstream
+    //write_xml(filename, tree, std::locale(), xml_writer_make_settings(' ', 4)); <- locale() arg for writing to file
+    pt::write_xml(ss, tree_, pt::xml_writer_make_settings<std::string>(' ', 4));
     cout << "TREE: " << endl << endl << ss.str() << endl << endl; //output string created by stringstream
+    //pt::write_xml(ss, tree_, pt::xml_writer_make_settings<std::string>(' ', 4));
 }
 void XMLCommandAdapter::Load()
 {
@@ -77,16 +80,17 @@ void XMLCommandAdapter::Shed()
 }
 void XMLCommandAdapter::MakeCommand(string type)
 {
-    float dur = 3.1415;
-    std::time_t t = std::time(0);
-    string str_time = ctime(&t);
+    float dur = 3.1415; //duration for testing
+    std::time_t start_time = std::time(0);
+    string str_time = ctime(&start_time);
     //std::tm* gmtm = gmtime(&t);
     //std::string str_time = std::asctime(gmtm);
-
-    tree_.put("command.type", type);
-    tree_.put("command.start", t);
-    tree_.put("command.duration", dur);
-    tree_.put("command.logged", std::time(0));
+    tree_.put("message.from", "DCM");
+    tree_.put("message.to", "DER");
+    tree_.put("message.content.command.type", type);
+    tree_.put("message.content.command.start", start_time);
+    tree_.put("message.content.command.duration", dur);
+    tree_.put("message.content.logged", std::time(0));
 }
 
 }//namespace xml

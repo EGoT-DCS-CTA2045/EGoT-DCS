@@ -15,7 +15,7 @@ void XMLAdapterTest();
 
 int main()
 {
-    cout<<"     TESTING      "<<endl;
+    cout<<"     TESTING i     "<<endl;
     XMLAdapterTest();
     //InterfaceCommandTest();
 }
@@ -34,9 +34,6 @@ void InterfaceCommandTest()
     cout<<"InterfaceCommandTest creating command object..."<<endl;
     announcer::InterfaceCommand command;
     cout<<"now testing..."<<endl;
-    command.testing();
-    command.makeShed();
     cout << " NOW ADD LINES" << endl;
-    command.appendTreeToTestFile();
     cout<<"test over"<<endl;
 }
