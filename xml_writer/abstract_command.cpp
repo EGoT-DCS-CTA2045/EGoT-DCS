@@ -47,6 +47,7 @@ void DERCommand::testing()
 }
 void DERCommand::makeShed()
 {
+    float dur = 3.1415;
     std::time_t t = std::time(0);
     string str_time = ctime(&t);
     //std::tm* gmtm = gmtime(&t);
@@ -54,7 +55,9 @@ void DERCommand::makeShed()
     cout<<"---------MAKE SHED---------------------"<<endl;
     command_ = "SHED";
     tree_.put("command.type", command_);
-    tree_.put("command.date", str_time);
+    tree_.put("command.start", str_time);
+    tree_.put("command.duration", dur);
+    tree_.put("command.logged", std::time(0));
 
     outputTree();
 }

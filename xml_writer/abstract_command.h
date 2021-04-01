@@ -21,7 +21,7 @@ namespace xml
  * throughout the DCM architecture.
  * -------------------------------------------------------------------
  */
-class DERCommand {
+    class DERCommand: public std::string {
     public:
         DERCommand();
         DERCommand(const DERCommand &);
