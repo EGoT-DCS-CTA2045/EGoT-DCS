@@ -26,15 +26,20 @@ namespace xml
  */
 const std::string testing_file_name = "test_file.xml";
 
-class CTA2045ToXMLAdapter
+class XMLCommandAdapter
 {
     public:
-        CTA2045ToXMLAdapter() : xml_notification_("NO DATA"), test_file_name_(testing_file_name)
+        XMLCommandAdapter() : xml_notification_("NO DATA"), test_file_name_(testing_file_name)
         {}
-        ~CTA2045ToXMLAdapter();
+        ~XMLCommandAdapter();
         void GenerateTestFile();
         void GenerateNamedTestFile(std::string src);
         void ReadTestFile();
+        void AppendTreeToTestLog(std::string log_path);
+        void OutputTreeToTerminal();
+        void Load();
+        void Shed();
+        void MakeCommand(std::string type);
 
     private:
         std::string xml_notification_;

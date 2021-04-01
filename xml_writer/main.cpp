@@ -8,32 +8,25 @@ using std::cout;
 using std::endl;
 namespace announcer = dcm_src::xml;
 
+const string MSG_LOG_PATH = "../../msg_logs/dtm_messages_testing.txt"; //path to msg log
+
 void DERCommandTest(); // prototypes of testing functions
 void XMLAdapterTest();
 
 int main()
 {
-    //announcer::CTA2045ToXMLAdapter XMLAdapter;
-    //cout << "WTF IS GOING ON" << endl;
-
-    cout<<"path test"<<endl;
+    cout<<"     TESTING      "<<endl;
     XMLAdapterTest();
-
-    //XMLAdapter.GenerateTestFile();
-    //XMLAdapter.ReadTestFile();
-
-    announcer::CTA2045ToXMLAdapter XMLAdapter;
-    //cout << "WTF IS GOING ON" << endl;
-    cout<<"why won't this work"<<endl;
-
-    //XMLAdapter.GenerateTestFile();
-    //XMLAdapter.ReadTestFile();
-    DERCommandTest();
+    //DERCommandTest();
 }
 void XMLAdapterTest()
 {
-    announcer::CTA2045ToXMLAdapter XMLAdapter;
-    XMLAdapter.GenerateNamedTestFile("../../msg_logs/dtm_messages_testing.xml");
+    announcer::XMLCommandAdapter CommandIs;
+    //CommandIs.GenerateNamedTestFile(MSG_LOG_PATH);
+    CommandIs.Load();
+    CommandIs.Shed();
+    CommandIs.OutputTreeToTerminal();
+    CommandIs.AppendTreeToTestLog(MSG_LOG_PATH);
 
 }
 void DERCommandTest()
