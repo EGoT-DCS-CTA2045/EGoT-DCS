@@ -21,24 +21,21 @@ namespace xml
  * throughout the DCM architecture.
  * -------------------------------------------------------------------
  */
-class DERCommand {
+class InterfaceCommand {
     public:
-        DERCommand();
-        DERCommand(const DERCommand &);
-        DERCommand & operator = (const DERCommand &);
-        ~DERCommand();
+        InterfaceCommand();
+        InterfaceCommand(const InterfaceCommand &);
+        InterfaceCommand(const boost::property_tree::ptree  & tree);
+        InterfaceCommand & operator = (const InterfaceCommand &);
+        InterfaceCommand & operator = (const boost::property_tree::ptree & tree);
+        ~InterfaceCommand();
         std::string Str()
         {
-            return command_;
+            return ss_command_.str();
         }
-        void testing();
-        void makeShed();
-        void outputTreeToTerminal();
-        void appendTreeToTestFile();
-        void outputTree();
 
     private:
-        std::string command_;
+        std::stringstream ss_command_;
         boost::property_tree::ptree tree_;
 };
 

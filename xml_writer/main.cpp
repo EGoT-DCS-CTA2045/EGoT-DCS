@@ -10,14 +10,14 @@ namespace announcer = dcm_src::xml;
 
 const string MSG_LOG_PATH = "../../msg_logs/dtm_messages_testing.txt"; //path to msg log
 
-void DERCommandTest(); // prototypes of testing functions
+void InterfaceCommandTest(); // prototypes of testing functions
 void XMLAdapterTest();
 
 int main()
 {
     cout<<"     TESTING      "<<endl;
     XMLAdapterTest();
-    //DERCommandTest();
+    //InterfaceCommandTest();
 }
 void XMLAdapterTest()
 {
@@ -29,10 +29,10 @@ void XMLAdapterTest()
     CommandIs.AppendTreeToTestLog(MSG_LOG_PATH);
 
 }
-void DERCommandTest()
+void InterfaceCommandTest()
 {
-    cout<<"dercommandTest creating command object..."<<endl;
-    announcer::DERCommand command;
+    cout<<"InterfaceCommandTest creating command object..."<<endl;
+    announcer::InterfaceCommand command;
     cout<<"now testing..."<<endl;
     command.testing();
     command.makeShed();
