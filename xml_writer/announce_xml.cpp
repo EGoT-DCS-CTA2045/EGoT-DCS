@@ -54,18 +54,36 @@ void XMLCommandAdapter::ReadTestFile()
 }
 void XMLCommandAdapter::AppendTreeToTestLog(std::string log_path)
 {
+    cout << "Append Tree" << endl;
+    std::stringstream ss;
+    pt::ptree file_tree;
+    pt::read_xml(log_path, file_tree);
+    OutputTreeToTerminal(file_tree);
+    file_tree.push_back( std::make_pair("message_log", tree_ ) );
+    cout << "Now Re-display" << endl;
+    OutputTreeToTerminal(file_tree);
+    /*
     std::stringstream ss; //string stream
     std::ofstream file(log_path, std::ios::app); //open file stream in append mode
     pt::write_xml(ss, tree_); //write xml tree to string stream
     file << endl << endl; //add line breaks after prev entry
     file << ss.str(); //write stringstream (containing xml tree) to file
     file.close(); //close file
+     */
+
 }
 void XMLCommandAdapter::OutputTreeToTerminal()
 {
     std::stringstream ss;
     //pt::write_xml(ss, tree_); //write tree to stringstream
     pt::write_xml(ss, tree_, pt::xml_writer_make_settings<std::string>(' ', 4)); //<- this works to format the tree nicely
+    cout << "TREE: " << endl << endl << ss.str() << endl << endl; //output string created by stringstream
+}
+void XMLCommandAdapter::OutputTreeToTerminal(pt::ptree  & src_tree)
+{
+    std::stringstream ss;
+    //pt::write_xml(ss, tree_); //write tree to stringstream
+    pt::write_xml(ss, src_tree, pt::xml_writer_make_settings<std::string>(' ', 4)); //<- this works to format the tree nicely
     cout << "TREE: " << endl << endl << ss.str() << endl << endl; //output string created by stringstream
 }
 void XMLCommandAdapter::Load()

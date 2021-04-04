@@ -8,27 +8,29 @@ using std::cout;
 using std::endl;
 namespace announcer = dcm_src::xml;
 
-const string MSG_LOG_PATH = "../../msg_logs/dtm_messages_testing.txt"; //path to msg log
+const string MSG_LOG_PATH = "../../msg_logs/dtm_messages_testing.xml"; //path to msg log
 
-void InterfaceCommandTest(); // prototypes of testing functions
+//void InterfaceCommandTest(); // prototypes of testing functions
 void XMLAdapterTest();
 
 int main()
 {
-    cout<<"     TESTING k     "<<endl;
+    cout<<"     TESTING X     "<<endl;
     XMLAdapterTest();
     //InterfaceCommandTest();
 }
 void XMLAdapterTest()
 {
+    cout << "XMLADAPTER TEST " << endl;
     announcer::XMLCommandAdapter CommandIs;
     //CommandIs.GenerateNamedTestFile(MSG_LOG_PATH);
-    CommandIs.Load();
-    CommandIs.Shed();
-    CommandIs.OutputTreeToTerminal();
+    //CommandIs.Load();
+    //CommandIs.Shed();
+    //CommandIs.OutputTreeToTerminal();
     CommandIs.AppendTreeToTestLog(MSG_LOG_PATH);
 
 }
+/*
 void InterfaceCommandTest()
 {
     cout<<"InterfaceCommandTest creating command object..."<<endl;
@@ -37,3 +39,4 @@ void InterfaceCommandTest()
     cout << " NOW ADD LINES" << endl;
     cout<<"test over"<<endl;
 }
+ */
