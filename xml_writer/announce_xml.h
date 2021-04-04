@@ -37,7 +37,7 @@ class XMLCommandAdapter
         void ReadTestFile();
         void AppendTreeToTestLog(std::string log_path);
         void OutputTreeToTerminal();
-        void OutputTreeToTerminal(boost::property_tree::ptree src_tree);
+        void OutputTreeToTerminal(boost::property_tree::ptree & src_tree);
         void Load();
         void Shed();
         void MakeCommand(std::string type);

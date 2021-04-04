@@ -79,7 +79,7 @@ void XMLCommandAdapter::OutputTreeToTerminal()
     pt::write_xml(ss, tree_, pt::xml_writer_make_settings<std::string>(' ', 4)); //<- this works to format the tree nicely
     cout << "TREE: " << endl << endl << ss.str() << endl << endl; //output string created by stringstream
 }
-void XMLCommandAdapter::OutputTreeToTerminal(pt::ptree  & src_tree)
+void XMLCommandAdapter::OutputTreeToTerminal(pt::ptree & src_tree)
 {
     std::stringstream ss;
     //pt::write_xml(ss, tree_); //write tree to stringstream
