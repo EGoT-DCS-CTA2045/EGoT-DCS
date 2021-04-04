@@ -25,7 +25,7 @@ void XMLAdapterTest()
     announcer::XMLCommandAdapter CommandIs;
     //CommandIs.GenerateNamedTestFile(MSG_LOG_PATH);
     //CommandIs.Load();
-    //CommandIs.Shed();
+    CommandIs.Shed();
     //CommandIs.OutputTreeToTerminal();
     CommandIs.AppendTreeToTestLog(MSG_LOG_PATH);
 

@@ -57,11 +57,18 @@ void XMLCommandAdapter::AppendTreeToTestLog(std::string log_path)
     cout << "Append Tree" << endl;
     std::stringstream ss;
     pt::ptree file_tree;
-    pt::read_xml(log_path, file_tree);
-    OutputTreeToTerminal(file_tree);
+
+    pt::read_xml(log_path, file_tree); //read in from xml file
+    OutputTreeToTerminal(file_tree); //print file
     file_tree.push_back( std::make_pair("message_log", tree_ ) );
+   // file_tree.put_child("message_log", tree_ ); //add tree_ to read-in tree
+
     cout << "Now Re-display" << endl;
-    OutputTreeToTerminal(file_tree);
+    OutputTreeToTerminal(file_tree); //redisplay in terminal
+    //pt::write_xml(log_path, file_tree); //write modified tree to file
+    pt::write_xml(log_path, file_tree, std::locale(), pt::xml_writer_make_settings<std::string>(' ', 4)); //<- this works to format the tree nicely
+    //the ^ std::locale() is necessary when writing to a file rather then a stream object, for reasons I don't understand
+
     /*
     std::stringstream ss; //string stream
     std::ofstream file(log_path, std::ios::app); //open file stream in append mode

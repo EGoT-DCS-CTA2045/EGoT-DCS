@@ -1,25 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CREATED><date>4/1/2021</date></CREATED>
+<message_log>
+    
+    
+    
 
-<?xml version="1.0" encoding="utf-8"?>
-<command><type>SHED</type><start>Thu Apr  1 22:11:56 2021
-</start><duration>3.1415</duration><logged>1617315116</logged></command>
+    
 
-<?xml version="1.0" encoding="utf-8"?>
-<command><type>SHED</type><start>Thu Apr  1 22:12:32 2021
-</start><duration>3.1415</duration><logged>1617315152</logged></command>
+    <message>
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+    
+        <from>DCM</from>
+        <to>DER</to>
+        <content>
+            
+            
+            
+            
+        
+            
+            
+        
+            <command>
+                
+                
+                
+                
+                
+            
+                
+                
+                
+            
+                <type>SHED</type>
+                <start>1617498446</start>
+                <duration>3.1415</duration>
+            </command>
+            <expect_response>1</expect_response>
+        </content>
+        <logged>1617498446</logged>
+    </message>
+</message_log>
+<message_log>
+    
+    
 
-<?xml version="1.0" encoding="utf-8"?>
-<command><type>SHED</type><start>1617315219</start><duration>3.1415</duration><logged>1617315219</logged></command>
-
-<?xml version="1.0" encoding="utf-8"?>
-<command><type>SHED</type><start>1617315410</start><duration>3.1415</duration><logged>1617315410</logged></command>
-
-<?xml version="1.0" encoding="utf-8"?>
-<command><type>SHED</type><start>1617315422</start><duration>3.1415</duration><logged>1617315422</logged></command>
-
-<?xml version="1.0" encoding="utf-8"?>
-<command><type>SHED</type><start>1617315430</start><duration>3.1415</duration><logged>1617315430</logged></command>
-
-<?xml version="1.0" encoding="utf-8"?>
-<command><type>LOAD</type><start>1617315436</start><duration>3.1415</duration><logged>1617315436</logged></command>
+    <message>
+        
+        
+        
+        
+        
+    
+        <from>DCM</from>
+        <to>DER</to>
+        <content>
+            
+            
+            
+        
+            <command>
+                
+                
+                
+                
+            
+                <type>SHED</type>
+                <start>1617498512</start>
+                <duration>3.1415</duration>
+            </command>
+            <expect_response>1</expect_response>
+        </content>
+        <logged>1617498512</logged>
+    </message>
+</message_log>
+<message_log>
+    <message>
+        <from>DCM</from>
+        <to>DER</to>
+        <content>
+            <command>
+                <type>SHED</type>
+                <start>1617498574</start>
+                <duration>3.1415</duration>
+            </command>
+            <expect_response>1</expect_response>
+        </content>
+        <logged>1617498574</logged>
+    </message>
+</message_log>
