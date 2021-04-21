@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/announcer.dir/main.cpp.o CMakeFiles/announcer.dir/announce_xml.cpp.o CMakeFiles/announcer.dir/abstract_command.cpp.o -o announcer 

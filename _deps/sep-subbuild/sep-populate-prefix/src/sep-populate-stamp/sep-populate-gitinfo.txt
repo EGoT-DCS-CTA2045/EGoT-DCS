@@ -1,3 +1,0 @@
-repository='https://github.com/psu-powerlab/IEEE_2030-5_Resources.git'
-module=''
-tag='origin'

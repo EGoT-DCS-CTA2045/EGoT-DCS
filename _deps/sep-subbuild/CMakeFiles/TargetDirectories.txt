@@ -1,3 +1,0 @@
-/home/pi/Documents/EGoT-DCS/_deps/sep-subbuild/CMakeFiles/rebuild_cache.dir
-/home/pi/Documents/EGoT-DCS/_deps/sep-subbuild/CMakeFiles/sep-populate.dir
-/home/pi/Documents/EGoT-DCS/_deps/sep-subbuild/CMakeFiles/edit_cache.dir

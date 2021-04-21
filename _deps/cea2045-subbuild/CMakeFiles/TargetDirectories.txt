@@ -1,3 +1,0 @@
-/home/pi/Documents/EGoT-DCS/_deps/cea2045-subbuild/CMakeFiles/rebuild_cache.dir
-/home/pi/Documents/EGoT-DCS/_deps/cea2045-subbuild/CMakeFiles/cea2045-populate.dir
-/home/pi/Documents/EGoT-DCS/_deps/cea2045-subbuild/CMakeFiles/edit_cache.dir
