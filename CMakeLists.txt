@@ -24,6 +24,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Find packages go here.
 find_package(Boost REQUIRED)
+find_package(OpenSSL REQUIRED)
 
 #FetchContent_Declare(
   #googletest

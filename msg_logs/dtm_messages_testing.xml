@@ -1,46 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <message_log>
-    
-    
-    
-
-    
-
     <message>
-        
-        
-        
-        
-        
-        
-    
-        
-        
-        
-        
-    
         <from>DCM</from>
         <to>DER</to>
         <content>
-            
-            
-            
-            
-        
-            
-            
-        
             <command>
-                
-                
-                
-                
-                
-            
-                
-                
-                
-            
                 <type>SHED</type>
                 <start>1617498446</start>
                 <duration>3.1415</duration>
@@ -51,29 +15,11 @@
     </message>
 </message_log>
 <message_log>
-    
-    
-
     <message>
-        
-        
-        
-        
-        
-    
         <from>DCM</from>
         <to>DER</to>
         <content>
-            
-            
-            
-        
             <command>
-                
-                
-                
-                
-            
                 <type>SHED</type>
                 <start>1617498512</start>
                 <duration>3.1415</duration>
@@ -96,5 +42,35 @@
             <expect_response>1</expect_response>
         </content>
         <logged>1617498574</logged>
+    </message>
+</message_log>
+<message_log>
+    <message>
+        <from>DCM</from>
+        <to>DER</to>
+        <content>
+            <command>
+                <type>SHED</type>
+                <start>1619399441</start>
+                <duration>3.1415</duration>
+            </command>
+            <expect_response>1</expect_response>
+        </content>
+        <logged>1619399441</logged>
+    </message>
+</message_log>
+<message_log>
+    <message>
+        <from>DCM</from>
+        <to>DER</to>
+        <content>
+            <command>
+                <type>SHED</type>
+                <start>1619399457</start>
+                <duration>3.1415</duration>
+            </command>
+            <expect_response>1</expect_response>
+        </content>
+        <logged>1619399457</logged>
     </message>
 </message_log>

@@ -58,7 +58,7 @@ void XMLCommandAdapter::AppendTreeToTestLog(std::string log_path)
     std::stringstream ss;
     pt::ptree file_tree;
 
-    pt::read_xml(log_path, file_tree); //read in from xml file
+    pt::read_xml(log_path, file_tree, pt::xml_parser::trim_whitespace); //read in from xml file
     OutputTreeToTerminal(file_tree); //print file
     file_tree.push_back( std::make_pair("message_log", tree_ ) );
    // file_tree.put_child("message_log", tree_ ); //add tree_ to read-in tree

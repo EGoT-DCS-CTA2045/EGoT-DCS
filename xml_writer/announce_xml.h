@@ -41,6 +41,12 @@ class XMLCommandAdapter
         void Load();
         void Shed();
         void MakeCommand(std::string type);
+        std::string ReturnCommandAsStr()
+        {
+            std::stringstream ss;
+            pt::write_xml(ss, tree_, boost::property_tree::xml_writer_make_settings<std::string>(' ', 4));
+            return ss.str();
+        }
 
     private:
         std::string xml_notification_;

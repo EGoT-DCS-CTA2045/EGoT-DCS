@@ -1,6 +1,6 @@
 #include "announce_xml.h"
 #include "abstract_command.h"
-
+#include <https/https_client.hpp>
 
 //namespacing for this file
 using std::string;
@@ -16,8 +16,19 @@ void XMLAdapterTest();
 int main()
 {
     cout<<"     TESTING X     "<<endl;
-    XMLAdapterTest();
+    //XMLAdapterTest();
     //InterfaceCommandTest();
+    ClientTest();
+}
+void ClientTest()
+{
+    announcer::XMLCommandAdapter CommandIs;
+    std::cout << "http Client test" << std::endl;
+    HttpsClient client("localhost", "8886");
+    
+    CommandIs.Shed();
+    std::cout << client.POST("", CommandIs.ReturnCommandAsStr()) << std::endl;
+
 }
 void XMLAdapterTest()
 {
