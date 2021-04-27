@@ -34,8 +34,8 @@ void ClientTest()
     std::cout << client.Post(command) << std::endl;
 
     //what("http-client-async www.example.com 80 /");
-    std::make_shared<session>(ioc)->run(host, port, target, xml_str, version);
-    ioc.run();
+    //std::make_shared<session>(ioc)->run(host, port, target, xml_str, version);
+    //ioc.run();
 
 }
 void XMLAdapterTest()
