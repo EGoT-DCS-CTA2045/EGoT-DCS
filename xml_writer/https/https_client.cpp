@@ -9,18 +9,12 @@ namespace ssl = net::ssl;
 HttpsClient::HttpsClient(const std::string &host, const std::string &port) 
     : host_(host), 
     port_(port), 
-    ctx_(ssl::context::sslv23), 
+    ssl_context_(ssl::context::tlsv12_client), 
     resolver_(io_context_),
-    stream_(io_context_, ctx_)
+    stream_(io_context_, ssl_context_)
 {
-    ctx_.load_verify_file("../../certs/RootCA.crt");
-    //load_root_certificates(ctx_);
-    
-    ctx_.set_verify_mode(ssl::verify_peer);
-    ctx_.set_verify_callback(std::bind(&HttpsClient::verify_certificate, this, std::placeholders::_1, std::placeholders::_2));
-    /*
-    load_root_certificates(ssl_context_);
-
+    //load_root_certificates(ssl_context_);
+/*
     ssl_context_.set_verify_mode(
         ssl::context::verify_peer 
         | ssl::context::verify_fail_if_no_peer_cert
@@ -32,13 +26,10 @@ HttpsClient::HttpsClient(const std::string &host, const std::string &port)
         bb::error_code ec{static_cast<int>(::ERR_get_error()), net::error::get_ssl_category()};
         throw bb::system_error{ec};
     }
-/*
-    ssl_context_.set_default_verify_paths();
- 
 
-    ssl_context_.set_verify_mode(ssl::verify_peer);
-    ssl_context_.set_verify_callback(std::bind(&session::verify_certificate, this, _1, _2));
-    */
+    //ssl_context_.set_default_verify_paths();
+
+   // ssl_context_.set_verify_mode(ssl::verify_peer);
 }
 
 HttpsClient::~HttpsClient ()

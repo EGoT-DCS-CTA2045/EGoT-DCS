@@ -12,7 +12,6 @@
 
 #include <string>
 #include <memory>
-#include <iostream>
 
 // Singleton Design Pattern
 class HttpsClient
@@ -47,15 +46,6 @@ private:
     (
         boost::beast::http::request <boost::beast::http::string_body>& req
     );
-    bool verify_certificate(bool pverified_ok, boost::asio::ssl::verify_context& ctx)
-    {
-        char subject_name[256];
-        X509 *cert = X509_STORE_CTX_get_current_cert(ctx.native_handle());
-        X509_NAME_oneline(X509_get_subject_name(cert), subject_name, 256);
-        std::cout << "Verifying " << subject_name << std::endl;
-
-        return pverified_ok;
-    }
 
 private:
     std::string host_;
@@ -63,7 +53,7 @@ private:
 
     // required for all boost beast I/O
     boost::asio::io_context io_context_;
-    boost::asio::ssl::context ctx_;
+    boost::asio::ssl::context ssl_context_;
     boost::asio::ip::tcp::resolver resolver_;
     boost::beast::ssl_stream<boost::beast::tcp_stream> stream_;
 };
