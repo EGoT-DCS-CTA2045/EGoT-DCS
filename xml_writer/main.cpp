@@ -2,6 +2,7 @@
 #include "abstract_command.h"
 #include "https/https_client.hpp"
 
+
 //namespacing for this file
 using std::string;
 using std::cout;
@@ -31,6 +32,10 @@ void ClientTest()
     std::string empty = " ";
     std::string command = CommandIs.ReturnCommandAsStr();
     std::cout << client.Post(command) << std::endl;
+
+    //what("http-client-async www.example.com 80 /");
+    std::make_shared<session>(ioc)->run(host, port, target, xml_str, version);
+    ioc.run();
 
 }
 void XMLAdapterTest()

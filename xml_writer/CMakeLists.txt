@@ -1,10 +1,11 @@
 add_subdirectory(https)
+add_subdirectory(https_simple)
 
 set(COMPONENT_NAME dcm)
 
 add_executable(announcer main.cpp announce_xml.cpp abstract_command.cpp) 
-
-target_link_libraries(announcer PUBLIC https cea2045 Boost::boost OpenSSL::SSL pthread)
+#re-add https_simple
+target_link_libraries(announcer PUBLIC https https_simple cea2045 Boost::boost OpenSSL::SSL pthread)
 
 target_include_directories(announcer PUBLIC
         ${cea2045_SOURCE_DIR}/cea2045
