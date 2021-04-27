@@ -12,6 +12,7 @@ const string MSG_LOG_PATH = "../../msg_logs/dtm_messages_testing.xml"; //path to
 
 //void InterfaceCommandTest(); // prototypes of testing functions
 void XMLAdapterTest();
+void ClientTest();
 
 int main()
 {
@@ -27,7 +28,9 @@ void ClientTest()
     HttpsClient client("localhost", "8886");
     
     CommandIs.Shed();
-    std::cout << client.POST("", CommandIs.ReturnCommandAsStr()) << std::endl;
+    std::string empty = " ";
+    std::string command = CommandIs.ReturnCommandAsStr();
+    std::cout << client.Post(command) << std::endl;
 
 }
 void XMLAdapterTest()

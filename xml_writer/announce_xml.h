@@ -44,7 +44,7 @@ class XMLCommandAdapter
         std::string ReturnCommandAsStr()
         {
             std::stringstream ss;
-            pt::write_xml(ss, tree_, boost::property_tree::xml_writer_make_settings<std::string>(' ', 4));
+            boost::property_tree::write_xml(ss, tree_, boost::property_tree::xml_writer_make_settings<std::string>(' ', 4));
             return ss.str();
         }
 

@@ -27,7 +27,7 @@ public:
 
     boost::beast::http::response <boost::beast::http::dynamic_body> Post
     (
-        const std::string& target, const std::string& resource
+        const std::string& target, const std::string& resource = ""
     );
 
     boost::beast::http::response <boost::beast::http::dynamic_body> Put
