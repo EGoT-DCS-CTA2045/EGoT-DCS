@@ -1,7 +1,5 @@
 #include "include/https/https_client.hpp"
-//#include "include/https/root_certificates.hpp"
-//#include <boost/certify/https_verification.hpp>
-//#include <boost/certify/extensions.hpp>
+#include "include/https/root_certificates.hpp"
 
 // alias to make things easier to read
 namespace bb = boost::beast;
@@ -30,7 +28,8 @@ HttpsClient::HttpsClient(const std::string &host, const std::string &port)
     }
 
     ssl_context_.set_default_verify_paths();
-    boost::certify::enable_native_https_server_verification(ssl_context_);
+
+    ssl_context_.set_verify_mode(ssl::verify_peer);
 }
 
 HttpsClient::~HttpsClient ()
