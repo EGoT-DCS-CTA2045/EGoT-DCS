@@ -4,7 +4,8 @@
 
 int main(void)
 {
-    httplib::Client client("192.168.0.178", 8889);
+    //httplib::Client client("192.168.0.178", 8889);
+    httplib::Client client("host.docker.internal", 8886); //host.docker.internal serves as an alias for the localhost IPof the host machine (the one running the docker container)
 
     std::cout << "attempting tests" << std::endl;
     if (auto res = client.Get("/hi")) {
