@@ -13,13 +13,10 @@ HttpsClient::HttpsClient(const std::string &host, const std::string &port)
     resolver_(io_context_),
     stream_(io_context_, ssl_context_)
 {
-    //load_root_certificates(ssl_context_);
-/*
-    ssl_context_.set_verify_mode(
-        ssl::context::verify_peer 
-        | ssl::context::verify_fail_if_no_peer_cert
-    );
-*/
+    load_root_certificates(ssl_context_);
+
+    ssl_context_.set_verify_mode(ssl::context::verify_peer);
+
     // Set SNI Hostname (many hosts need this to handshake successfully)
     if(! SSL_set_tlsext_host_name(stream_.native_handle(), host_.c_str()))
     {
@@ -27,9 +24,9 @@ HttpsClient::HttpsClient(const std::string &host, const std::string &port)
         throw bb::system_error{ec};
     }
 
-    //ssl_context_.set_default_verify_paths();
+    ssl_context_.set_default_verify_paths();
 
-   // ssl_context_.set_verify_mode(ssl::verify_peer);
+    ssl_context_.set_verify_mode(ssl::verify_peer);
 }
 
 HttpsClient::~HttpsClient ()

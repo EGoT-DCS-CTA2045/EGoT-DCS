@@ -26,7 +26,7 @@ void ClientTest()
 {
     announcer::XMLCommandAdapter CommandIs;
     std::cout << "http Client test" << std::endl;
-    HttpsClient client("127.0.0.1", "8886");
+    HttpsClient client("host.docker.internal", "8886");
     
     CommandIs.Shed();
     std::string empty = " ";

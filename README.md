@@ -45,7 +45,7 @@ Step by step:
 Clone httplib repo to the same root directory where you'll install the EGoT-DCS repo: ```git clone https://github.com/yhirose/cpp-httplib.git```
 Then `cd` into it. Then 
 
-``` mkdir -p build```
+```mkdir -p build```
 
 ```cd build```
 
@@ -53,6 +53,7 @@ Then `cd` into it. Then
 
 ```cmake --build . --target install```
 After this is done, you  can follow the instructions in the repo's CMakeLists.txt to include the library in your CMake project somewhere else in your system.
+
 ### Note on 'localhost' from within a docker container
 From inside a docker container, connecting to `localhost` just loops back to the localhost IP of the container, not of the host machine. To connect to
 the localhost address of the host machine from within the docker container, replace `localhost` with `host.docker.internal` (assuming your host machine runs Windows)
