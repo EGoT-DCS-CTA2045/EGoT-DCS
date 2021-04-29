@@ -25,6 +25,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Find packages go here.
 find_package(Boost REQUIRED)
 find_package(OpenSSL REQUIRED)
+find_package(httplib)
 
 #FetchContent_Declare(
   #googletest
@@ -59,7 +60,8 @@ FetchContent_MakeAvailable(SEP cea2045)
 #target_link_libraries(EGoT-DCS-CTA2045 ${wiringPi})
 #add_definitions(-std=c++0x -L/usr/include/wiringPi.h  -lwiringPi )
 # The executable code is here
+
 add_subdirectory(src)
 add_subdirectory(xml_writer)
-
+add_subdirectory(client_test)
 #add_subdirectory(tests)

@@ -40,6 +40,20 @@ Step by step:
 
 `make install`
 
+
+### To use httplib
+Clone httplib repo to the same root directory where you'll install the EGoT-DCS repo: ```git clone https://github.com/yhirose/cpp-httplib.git```
+Then `cd` into it. Then 
+
+``` mkdir -p build```
+
+```cd build```
+
+```cmake -DCMAKE_BUILD_TYPE=Release ..```
+
+```cmake --build . --target install```
+After this is done, you  can follow the instructions in the repo's CMakeLists.txt to include the library in your CMake project somewhere else in your system.
+
 ### From within the repo root directory
 After you clone this directory, if you want to work with raspi-config, you must manually switch branches (clone automatically grabs main).
 So from the directory where you cloned this repo, change directories into the repo: ```cd EGoT-DCS/```
